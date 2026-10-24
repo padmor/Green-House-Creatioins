@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest-950: #162720;
+  --color-forest-900: #20382f;
+  --color-forest-800: #20382f;
+  --color-forest-700: #2f5144;
+  --color-forest-600: #3f6b5a;
+  --color-forest-100: #e4ebe0;
+  --color-bone: #f5f3ec;
+  --color-sand: #ece9de;
+  --color-stone: #d8d3c7;
+  --color-ink: #252925;
+  --color-ink-soft: #3b403b; /* charcoal button hover */
+  --color-muted: #5f655f;
+  --color-sage: #cad9b9;
+  --color-brass: #cad9b9;
+
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+@layer base {
+  h1, h2, h3 { font-family: var(--font-serif); font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+  /* Brand text selection (sage with deep green text) instead of the browser's default blue; reads on light and dark sections. */
+  ::selection { background-color: #cad9b9; color: #162720; }
+  /* Form controls (checkboxes, radios) in brand green rather than browser blue. */
+  :root { accent-color: #20382f; }
+}
+
+/* Visible on both light and dark sections */
+:focus-visible {
+  outline: 2px solid var(--color-forest-600);
+  outline-offset: 3px;
+}
+
+/* Press feedback: buttons and button-style links dip slightly when tapped or clicked. */
+:where(button:not(:disabled), a.inline-flex) { -webkit-tap-highlight-color: transparent; }
+:where(button:not(:disabled), a.inline-flex):active { scale: .97; }
+
+/* Toast notifications slide up */
+@keyframes toast-in { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
+.gbc-toast { animation: toast-in .3s cubic-bezier(.2,.8,.2,1); }
+
+/* About page values: each row's top rule draws across, then its icon settles in, as the row scrolls into view. */
+.gbc-value::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: var(--color-stone);
+  transform-origin: left; transition: scale 1s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s);
+}
+.gbc-value:last-child::after { content: ""; position: absolute; inset: auto 0 0 0; height: 1px; background: var(--color-stone); }
+.js .gbc-value[data-reveal]::before { scale: 0 1; }
+.js .gbc-value[data-reveal][data-shown]::before { scale: 1 1; }
+.js .gbc-value[data-reveal] .gbc-value__icon { scale: .6; opacity: 0; transition: scale .6s cubic-bezier(.2,.8,.2,1.4), opacity .4s ease, background-color .3s, color .3s, border-color .3s; transition-delay: calc(var(--d, 0s) + .25s), calc(var(--d, 0s) + .25s), 0s, 0s, 0s; }
+.js .gbc-value[data-reveal][data-shown] .gbc-value__icon { scale: 1; opacity: 1; }
+/* the photo uncovers from the left as its row arrives */
+.js .gbc-value[data-reveal] .gbc-value__photo { clip-path: inset(0 100% 0 0); transition: clip-path .9s cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--d, 0s) + .1s); }
+.js .gbc-value[data-reveal][data-shown] .gbc-value__photo { clip-path: inset(0 0 0 0); }
+@media (prefers-reduced-motion: reduce) {
+  .js .gbc-value[data-reveal]::before { scale: 1 1; }
+  .js .gbc-value[data-reveal] .gbc-value__icon { scale: 1; opacity: 1; }
+  .js .gbc-value[data-reveal] .gbc-value__photo { clip-path: none; }
+}
+
+/* Announcements pop-up: entries rise in one after another */
+.gbc-ann-item { animation: fade-in .45s ease-out both; }
+
+/* Team cards: photo uncovers upwards as the card arrives; profile pop-up content settles in */
+.js .gbc-person[data-reveal] .gbc-person__photo { clip-path: inset(100% 0 0 0 round 1rem); transition: clip-path 1s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+.js .gbc-person[data-reveal][data-shown] .gbc-person__photo { clip-path: inset(0 0 0 0 round 1rem); }
+/* Full profile pop-up: the photo eases in, then the sections rise one after another */
+.gbc-profile-photo { animation: profile-photo .6s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes profile-photo { from { opacity: 0; scale: 1.06; } to { opacity: 1; scale: 1; } }
+.gbc-profile-section { animation: fade-in .5s ease-out both; }
+
+/* Team card reveal: the profile wipes out in a circle from the + button, then its lines rise in one by one */
+.gbc-card__info { clip-path: circle(0% at calc(100% - 2.4rem) calc(100% - 2.4rem)); transition: clip-path .75s cubic-bezier(.7,0,.2,1); }
+.gbc-card[data-open="true"] .gbc-card__info { clip-path: circle(150% at calc(100% - 2.4rem) calc(100% - 2.4rem)); }
+.gbc-card__info > * { opacity: 0; translate: 0 14px; transition: opacity .35s ease, translate .45s cubic-bezier(.2,.8,.2,1); }
+.gbc-card[data-open="true"] .gbc-card__info > * { opacity: 1; translate: 0 0; }
+.gbc-card[data-open="true"] .gbc-card__info > :nth-child(1) { transition-delay: .25s; }
+.gbc-card[data-open="true"] .gbc-card__info > :nth-child(2) { transition-delay: .32s; }
+.gbc-card[data-open="true"] .gbc-card__info > :nth-child(3) { transition-delay: .39s; }
+.gbc-card[data-open="true"] .gbc-card__info > :nth-child(4) { transition-delay: .46s; }
+.gbc-card[data-open="true"] .gbc-card__info > :nth-child(5) { transition-delay: .53s; }
+.gbc-card__photo { transition: scale .75s cubic-bezier(.7,0,.2,1); }
+.gbc-card[data-open="true"] .gbc-card__photo { scale: 1.08; }
+@media (prefers-reduced-motion: reduce) { .js .gbc-person[data-reveal] .gbc-person__photo { clip-path: none; } }
+
+/* Page-change loading bar: creeps towards the end while loading, then fills and fades out. */
+.gbc-nav-loading { animation: nav-grow 8s cubic-bezier(.08,.7,.2,1) forwards; }
+.gbc-nav-done { scale: 1 1; opacity: 0; transition: opacity .45s .1s ease; }
+@keyframes nav-grow { from { scale: 0 1; opacity: 1; } to { scale: .92 1; opacity: 1; } }
+
+/* Loading placeholders: a soft light sweep across grey blocks */
+.gbc-skeleton { position: relative; overflow: hidden; }
+.gbc-skeleton::after {
+  content: ""; position: absolute; inset: 0; translate: -100% 0;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .35), transparent);
+  animation: skeleton-sweep 1.4s ease-in-out infinite;
+}
+@keyframes skeleton-sweep { to { translate: 100% 0; } }
+.gbc-breathe { animation: breathe 1.8s ease-in-out infinite; }
+@keyframes breathe { 50% { opacity: .55; scale: .94; } }
+.gbc-dots { display: inline-flex; gap: 3px; }
+.gbc-dots i { width: 4px; height: 4px; border-radius: 9999px; background: currentColor; animation: dot-bounce 1.2s ease-in-out infinite; }
+.gbc-dots i:nth-child(2) { animation-delay: .15s; }
+.gbc-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot-bounce { 0%, 80%, 100% { opacity: .3; translate: 0 0; } 40% { opacity: 1; translate: 0 -3px; } }
+
+/* Enquiry "Send" button. The paper plane drifts like a kite while sending, flies away when the
+   message is sent (a tick lands in its place), or comes back with a small shake if it failed. */
+.gbc-send__plane { transition: translate .3s ease, rotate .3s ease; }
+.gbc-send:not(:disabled):hover .gbc-send__plane { translate: 3px -3px; rotate: -8deg; }
+.gbc-send__tick { opacity: 0; scale: .4; }
+.gbc-send[data-phase="sending"] .gbc-send__plane { animation: plane-kite 1.8s ease-in-out infinite; }
+.gbc-send[data-phase="sent"] .gbc-send__plane { animation: plane-away .8s cubic-bezier(.55,0,.8,.2) forwards; }
+.gbc-send[data-phase="sent"] .gbc-send__tick { animation: tick-in .45s .65s cubic-bezier(.2,.8,.2,1.3) forwards; }
+.gbc-send[data-phase="failed"] .gbc-send__plane { animation: plane-back .75s cubic-bezier(.2,.8,.2,1); }
+.gbc-send[data-phase="failed"][data-try="odd"] { animation: send-shake-a .45s .55s ease-in-out; }
+.gbc-send[data-phase="failed"][data-try="even"] { animation: send-shake-b .45s .55s ease-in-out; }
+@keyframes plane-kite {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  25% { translate: 4px -5px; rotate: -12deg; }
+  50% { translate: 1px -2px; rotate: 5deg; }
+  75% { translate: -3px -6px; rotate: -6deg; }
+}
+@keyframes plane-away {
+  0% { translate: 0 0; rotate: 0deg; }
+  20% { translate: -6px 3px; rotate: 10deg; }
+  100% { translate: 190px -90px; rotate: -22deg; scale: .5; opacity: 0; }
+}
+@keyframes plane-back {
+  0% { translate: 140px -70px; rotate: -25deg; scale: .6; opacity: 0; }
+  60% { translate: -5px 3px; rotate: 12deg; scale: 1; opacity: 1; }
+  100% { translate: 0 0; rotate: 0deg; }
+}
+@keyframes tick-in { to { opacity: 1; scale: 1; } }
+@keyframes send-shake-a { 0%, 100% { translate: 0; } 20%, 60% { translate: -5px; } 40%, 80% { translate: 5px; } }
+@keyframes send-shake-b { 0%, 100% { translate: 0; } 20%, 60% { translate: -5px; } 40%, 80% { translate: 5px; } }
+/* Thank-you panel settles in after the plane has gone */
+.gbc-landed { animation: fade-in .5s ease-out both; }
+
+/* Simple fade-in for page titles and for content as it scrolls into view.
+   Scroll reveal is only armed once <html class="js"> is set, so content never hides without JS. */
+@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.rise { animation: fade-in .6s ease-out both; animation-delay: var(--d, 0s); }
+.js [data-reveal] { opacity: 0; transform: translateY(12px); transition: opacity .6s ease-out, transform .6s ease-out; transition-delay: var(--d, 0s); }
+.js [data-reveal][data-shown] { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  .rise, .gbc-toast { animation: none !important; }
+  .js [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
+/* Enquiry pop-up: fade and rise in */
+@keyframes modal-in { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+.gbc-modal[open] { animation: modal-in .35s cubic-bezier(.2,.8,.2,1); }
+.gbc-modal[open]::backdrop { animation: backdrop-in .3s ease-out; }
+@media (prefers-reduced-motion: reduce) { .gbc-modal[open], .gbc-modal[open]::backdrop { animation: none; } }
+
+/* Leaflet: permanent "Cape Coast" label next to the office pin */
+.gbc-map-label {
+  background: transparent; border: 0; box-shadow: none; padding: 0;
+  font: 600 15px/1 var(--font-manrope), sans-serif; color: var(--color-ink);
+  text-shadow: 0 0 3px #f5f3ec, 0 0 6px #f5f3ec;
+}
+.gbc-map-label::before { display: none; }
+/* isolation keeps Leaflet's high z-index panes inside the map, below the fixed site header */
+.leaflet-container { font-family: var(--font-dm-sans), sans-serif; background: #dfe6d6; isolation: isolate; }
+
+/* Leaflet: project photo pins */
+.gbc-photo-pin {
+  position: relative; isolation: isolate; width: 56px; height: 66px; cursor: pointer;
+  transform-origin: 50% 100%; transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.gbc-photo-pin__img {
+  position: absolute; inset: 0 0 10px 0; overflow: hidden; background: var(--color-forest-900);
+  border: 3px solid #fff; box-shadow: 0 10px 24px -10px rgb(22 39 32 / .65);
+  transition: border-color .3s ease;
+}
+/* Leaflet forces marker-pane images to width:auto, so override it here. */
+.leaflet-container .gbc-photo-pin__img img { width: 100% !important; height: 100% !important; object-fit: cover; display: block; }
+/* pointer under the tile */
+.gbc-photo-pin::after {
+  content: ""; position: absolute; left: 50%; bottom: 2px; width: 12px; height: 12px; margin-left: -6px;
+  background: #fff; transform: rotate(45deg); z-index: -1; transition: background-color .3s ease;
+}
+.gbc-photo-pin.is-approx .gbc-photo-pin__img { border-style: dashed; border-color: var(--color-bone); }
+.gbc-photo-pin:hover, .gbc-photo-pin.is-active { transform: scale(1.12); }
+.gbc-photo-pin.is-active .gbc-photo-pin__img { border-color: var(--color-forest-900); }
+.gbc-photo-pin.is-active::after { background: var(--color-forest-900); }
+
+/* Leaflet: project card popup */
+.gbc-popup .leaflet-popup-content-wrapper { padding: 0; border-radius: 0; overflow: hidden; box-shadow: 0 18px 40px -16px rgb(22 39 32 / .55); }
+.gbc-popup .leaflet-popup-content { margin: 0; width: 240px !important; line-height: 1.35; }
+.gbc-popup .leaflet-popup-tip { box-shadow: none; }
+.gbc-popup a.leaflet-popup-close-button { color: #fff; text-shadow: 0 1px 4px rgb(0 0 0 / .6); font-size: 20px; top: 4px; right: 4px; }
+.gbc-popup__img { display: block; width: 100%; height: 140px; object-fit: cover; }
+.gbc-popup__body { padding: 14px 16px 16px; font-family: var(--font-dm-sans), sans-serif; }
+.gbc-popup__cat { margin: 0 !important; font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--color-muted); }
+.gbc-popup__title { margin: 6px 0 0 !important; font: 600 15px/1.25 var(--font-manrope), sans-serif; color: var(--color-forest-900); }
+.gbc-popup__loc { margin: 4px 0 0 !important; font-size: 12px; color: var(--color-muted); }
+.gbc-popup__link {
+  display: inline-flex; gap: 6px; margin-top: 12px; padding-bottom: 2px; border-bottom: 1px solid var(--color-forest-900);
+  font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--color-forest-900) !important;
+}
+.gbc-popup__link:hover span { transform: translateX(3px); }
+.gbc-popup__link span { transition: transform .3s ease; }
+
+@layer components {
+  .container-gbc { @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12; }
+  .eyebrow { @apply text-xs font-medium text-muted; }
+  /* Body copy and intro statements: one size and line length across the site */
+  .text-body { @apply max-w-[62ch] text-[15px] leading-[1.75] text-ink/75 sm:text-base; }
+  .text-lead { @apply max-w-[52ch] text-lg leading-[1.6] text-ink/80 sm:text-xl; }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3 text-sm font-medium tracking-wide transition-[color,background-color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-18px_rgba(22,41,31,0.6)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0;
+  }
+  .btn-primary { @apply bg-ink text-bone hover:bg-ink-soft; }
+  .btn-light { @apply bg-bone text-forest-900 hover:bg-white; }
+  .btn-outline { @apply border border-ink text-ink hover:bg-ink hover:text-bone; }
+  .btn-outline-light { @apply border border-bone/60 text-bone hover:bg-bone hover:text-forest-900; }
+  .field { @apply w-full rounded-none border border-stone/60 bg-[#f1efe9] px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/70 focus:border-forest-700; }
+  .field-dark { @apply w-full rounded-sm border border-white/35 bg-white/15 px-4 py-3 text-sm text-white placeholder:text-white/70 focus:border-sage; }
+  .label { @apply mb-1.5 block text-xs font-bold text-ink; }
+}
