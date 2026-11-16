@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { statusLabels, statusOrder } from "@/lib/content";
 import { EnquiryTable, type EnquiryRow } from "./EnquiryTable";
 
-const SELECT = "id,reference,name,project_type,location,status,follow_up_at,created_at,assigned:profiles!enquiries_assigned_to_fkey(full_name,email)";
+const SELECT = "id,reference,name,service,project_type,location,status,follow_up_at,created_at,assigned:profiles!enquiries_assigned_to_fkey(full_name,email)";
 
 export default async function DashboardHome({ searchParams }: { searchParams: Promise<{ denied?: string }> }) {
   const staff = await requireStaff();
