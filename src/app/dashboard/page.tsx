@@ -4,14 +4,14 @@ import { createClient } from "@/lib/supabase/server";
 import { statusLabels, statusOrder } from "@/lib/content";
 import { EnquiryTable, type EnquiryRow } from "./EnquiryTable";
 
-const SELECT = "id,reference,name,project_type,location,status,follow_up_at,created_at,assigned:profiles!enquiries_assigned_to_fkey(full_name,email)";
+const SELECT = "id,reference,name,service,project_type,location,status,follow_up_at,created_at,assigned:profiles!enquiries_assigned_to_fkey(full_name,email)";
 
 export default async function DashboardHome({ searchParams }: { searchParams: Promise<{ denied?: string }> }) {
   const staff = await requireStaff();
   const { denied } = await searchParams;
   const db = await createClient();
   const today = new Date().toISOString().slice(0, 10);
-  const open = ["new", "contacted", "consultation", "proposal"];
+  const open = ["new", "contacted", "consultation", "proposal", "won", "scheduled", "in_progress"];
 
   const showEnquiries = can.workEnquiries(staff.role);
   const [all, fresh, due] = showEnquiries
@@ -30,7 +30,7 @@ export default async function DashboardHome({ searchParams }: { searchParams: Pr
       <div>
         <h1 className="text-3xl text-forest-900">Welcome{staff.full_name ? `, ${staff.full_name.split(" ")[0]}` : ""}</h1>
         {denied && <p role="alert" className="mt-3 border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-800">Your role does not have access to that area.</p>}
-        {staff.role === "staff" && <p className="mt-2 text-sm text-muted">You can see enquiries assigned to you.</p>}
+        {staff.role === "staff" && <p className="mt-2 text-sm text-muted">You can see job requests assigned to you.</p>}
       </div>
 
       {showEnquiries ? (
@@ -51,14 +51,14 @@ export default async function DashboardHome({ searchParams }: { searchParams: Pr
 
           <section>
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-xl text-forest-900">New enquiries</h2>
-              <Link href="/dashboard/enquiries" className="text-sm underline underline-offset-4">All enquiries</Link>
+              <h2 className="text-xl text-forest-900">New job requests</h2>
+              <Link href="/dashboard/enquiries" className="text-sm underline underline-offset-4">All job requests</Link>
             </div>
-            <EnquiryTable rows={(fresh?.data ?? []) as unknown as EnquiryRow[]} empty="No new enquiries." />
+            <EnquiryTable rows={(fresh?.data ?? []) as unknown as EnquiryRow[]} empty="No new job requests." />
           </section>
         </>
       ) : (
-        <p className="text-muted">Use the menu above to manage the portfolio and website content.</p>
+        <p className="text-muted">Use the menu above to manage website content.</p>
       )}
     </div>
   );

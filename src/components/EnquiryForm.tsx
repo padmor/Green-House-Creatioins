@@ -27,7 +27,7 @@ const MESSAGE_MIN = 10;
 
 // The pop-up form keeps an unsent draft on this device, so closing the pop-up by accident loses nothing.
 const DRAFT_KEY = "gbc-enquiry-draft";
-const draftFields = ["name", "email", "project_type", "message"] as const;
+const draftFields = ["name", "email", "service", "message"] as const;
 type Draft = Partial<Record<(typeof draftFields)[number], string>>;
 function readDraft(): Draft {
   try {
@@ -80,7 +80,7 @@ function SendButton({ phase, attempt, label, className = "" }: { phase: Phase; a
         </span>
       </span>
       <span className="sr-only" role="status">
-        {phase === "sending" ? "Sending your enquiry" : phase === "failed" ? "Your enquiry was not sent. Please see the message above the form or the highlighted fields." : ""}
+        {phase === "sending" ? "Sending your job request" : phase === "failed" ? "Your job request was not sent. Please see the message above the form or the highlighted fields." : ""}
       </span>
     </button>
   );
@@ -236,28 +236,28 @@ function CompactForm({ state, action, phase, attempt, onSubmitted }: FormProps) 
         </p>
       )}
       <div className="grid gap-4 sm:grid-cols-2">
-        <FloatInput id="c-name" name="name" label="Full name *" autoComplete="name" defaultValue={v.name ?? ""} error={e.name} />
+        <FloatInput id="c-name" name="name" label="Your name *" autoComplete="name" defaultValue={v.name ?? ""} error={e.name} />
         <FloatInput id="c-email" name="email" type="email" label="Email address *" hint="you@example.com" autoComplete="email" defaultValue={v.email ?? ""} error={e.email} />
       </div>
-      <fieldset {...a11y("c-project_type", e.project_type)}>
-        <legend className="mb-2.5 px-1 text-[11px] font-semibold text-muted">Project type *</legend>
+      <fieldset {...a11y("c-service", e.service)}>
+        <legend className="mb-2.5 px-1 text-[11px] font-semibold text-muted">Trade needed *</legend>
         <div className="flex flex-wrap gap-2">
-          {enquiryOptions.projectTypes.map((o) => (
+          {enquiryOptions.services.map((o) => (
             <label key={o} className="cursor-pointer">
-              <input type="radio" name="project_type" value={o} defaultChecked={v.project_type === o} className="peer sr-only" />
+              <input type="radio" name="service" value={o} defaultChecked={v.service === o} className="peer sr-only" />
               <span className="inline-flex items-center gap-1.5 rounded-full border border-stone bg-white px-3.5 py-1.5 text-[12px] text-ink/80 transition-colors hover:border-ink/60 hover:text-ink peer-checked:border-ink peer-checked:bg-ink peer-checked:text-bone peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-forest-600">
                 {o}
               </span>
             </label>
           ))}
         </div>
-        <FieldError id="c-project_type" error={e.project_type} />
+        <FieldError id="c-service" error={e.service} />
       </fieldset>
       <FloatTextarea
         id="c-message"
         name="message"
-        label="Your message *"
-        hint="Location, size and when you hope to start"
+        label="Describe the job *"
+        hint="What needs doing, where the job is and when you need it"
         rows={4}
         defaultValue={v.message ?? ""}
         onInput={(ev) => setCount(ev.currentTarget.value.length)}
@@ -267,10 +267,10 @@ function CompactForm({ state, action, phase, attempt, onSubmitted }: FormProps) 
       <Honeypot id="c-website" />
       <div className="flex flex-col gap-5 border-t border-stone pt-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-xs text-[11px] leading-relaxed text-muted">
-          By sending this message you agree that GBC may contact you about your enquiry. See our{" "}
+          By sending this request you agree that GBC may contact you about the job and follow up with you. See our{" "}
           <Link href="/privacy" className="underline underline-offset-2 hover:text-forest-900">privacy policy</Link>.
         </p>
-        <SendButton phase={phase} attempt={attempt} label="Send message" className="min-w-48 shrink-0" />
+        <SendButton phase={phase} attempt={attempt} label="Post job request" className="min-w-48 shrink-0" />
       </div>
     </form>
   );
@@ -306,18 +306,18 @@ function FullForm({ state, action, phase, attempt, onSubmitted }: FormProps) {
         <FloatInput {...field("organisation")} label="Organisation (optional)" autoComplete="organization" />
         <FloatInput {...field("email")} type="email" label="Email *" hint="you@example.com" autoComplete="email" />
         <FloatInput {...field("phone")} type="tel" label="Phone / WhatsApp (optional)" hint="+233…" autoComplete="tel" />
-        <FloatSelect id="service" label="Service needed *" options={enquiryOptions.services} defaultValue={v.service} error={e.service} placeholder="Select a service" />
-        <FloatSelect id="project_type" label="Project type *" options={enquiryOptions.projectTypes} defaultValue={v.project_type} error={e.project_type} placeholder="Select a type" />
-        <FloatInput {...field("location")} label="Project location *" hint="Town / area" />
-        <FloatSelect id="timeline" label="Timeline (optional)" options={enquiryOptions.timelines} defaultValue={v.timeline} error={e.timeline} placeholder="Select a timeline" />
+        <FloatSelect id="service" label="Trade needed *" options={enquiryOptions.services} defaultValue={v.service} error={e.service} placeholder="Select a service" />
+        <FloatSelect id="project_type" label="Job type *" options={enquiryOptions.projectTypes} defaultValue={v.project_type} error={e.project_type} placeholder="Select a type" />
+        <FloatInput {...field("location")} label="Job location *" hint="Town / area" />
+        <FloatSelect id="timeline" label="When do you need it? (optional)" options={enquiryOptions.timelines} defaultValue={v.timeline} error={e.timeline} placeholder="Select a timeline" />
       </div>
 
-      <FloatSelect id="budget_range" label="Estimated budget (optional)" options={enquiryOptions.budgets} defaultValue={v.budget_range} error={e.budget_range} placeholder="Select a range" />
+      <FloatSelect id="budget_range" label="Budget / quote preference (optional)" options={enquiryOptions.budgets} defaultValue={v.budget_range} error={e.budget_range} placeholder="Select a range" />
 
       <FloatTextarea
         {...field("message")}
-        label="Tell us about the project *"
-        hint="What you want to build, the site, and when you hope to start"
+        label="Describe the job *"
+        hint="What needs doing, the location, measurements and any useful details"
         rows={5}
         onInput={(ev) => setCount(ev.currentTarget.value.length)}
         after={<MessageCount n={count} />}
@@ -330,14 +330,14 @@ function FullForm({ state, action, phase, attempt, onSubmitted }: FormProps) {
         <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-stone bg-white p-4 text-sm text-muted transition-colors hover:border-forest-700/40 has-[:checked]:border-forest-700/50 has-[:checked]:bg-forest-100/50">
           <input type="checkbox" name="consent" className="mt-0.5 h-4 w-4 shrink-0 accent-forest-800" {...a11y("consent", e.consent)} />
           <span>
-            I agree that GBC may contact me about this enquiry and store my details for that purpose, as described in the{" "}
+            I agree that GBC may contact me about this job request and store my details for that purpose, as described in the{" "}
             <Link href="/privacy" className="underline underline-offset-2 hover:text-forest-900">privacy policy</Link>. *
           </span>
         </label>
         <FieldError id="consent" error={e.consent} />
       </div>
 
-      <SendButton phase={phase} attempt={attempt} label="Send enquiry" className="w-full" />
+      <SendButton phase={phase} attempt={attempt} label="Submit job request" className="w-full" />
     </form>
   );
 }
@@ -353,14 +353,14 @@ export function EnquiryForm({ variant = "full" }: { variant?: "full" | "compact"
   useEffect(() => {
     if (!state.ok) return;
     clearDraft();
-    toast(`Enquiry sent. Your reference is ${state.reference}.`);
+    toast(`Job request received. Your reference is ${state.reference}.`);
     const t = window.setTimeout(() => setLanded(true), 1300);
     return () => window.clearTimeout(t);
   }, [state.ok, state.reference]);
 
   // Tell the visitor about a failed send even if the message at the top of the form is scrolled out of view.
   useEffect(() => {
-    if (!state.ok && state.message) toast("Your enquiry was not sent. " + (state.errors ? "Please check the highlighted fields." : "Please try again."), "error");
+    if (!state.ok && state.message) toast("Your job request was not sent. " + (state.errors ? "Please check the highlighted fields." : "Please try again."), "error");
   }, [state]);
 
   const phase: Phase = pending ? "sending" : state.ok ? "sent" : attempt > 0 && (blocked || state !== initial) ? "failed" : "idle";
@@ -375,9 +375,9 @@ export function EnquiryForm({ variant = "full" }: { variant?: "full" | "compact"
         <span aria-hidden className={`grid h-12 w-12 place-items-center rounded-full bg-forest-900 text-sage ${variant === "compact" ? "mx-auto" : ""}`}>
           <Check size={22} strokeWidth={2.2} />
         </span>
-        <p className="mt-5 font-serif text-xl font-semibold text-forest-900">Thank you. We have your enquiry.</p>
+        <p className="mt-5 font-serif text-xl font-semibold text-forest-900">Thank you. Your job request has been received.</p>
         <p className="mt-2 text-sm text-ink/75">
-          Your reference is <strong className="text-forest-900">{state.reference}</strong>. A member of the team will be in touch
+          Your reference is <strong className="text-forest-900">{state.reference}</strong>. The GBC team will review the details and contact you
           {variant === "full" ? ". If you provided an email address, an acknowledgement is on its way." : "."}
         </p>
       </div>

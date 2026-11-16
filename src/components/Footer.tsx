@@ -16,20 +16,20 @@ const icons: Record<string, React.ReactNode> = {
 
 const columns = [
   {
-    title: "Company",
+    title: "Explore",
     links: [
-      { href: "/about", label: "About Us" },
-      { href: "/services", label: "Services" },
-      { href: "/sustainability", label: "Sustainability" },
-      { href: "/careers", label: "Careers" },
+      { href: "/about", label: "How it works" },
+      { href: "/services", label: "Trades & Services" },
+      { href: "/sustainability", label: "Worksite standards" },
+      { href: "/contact", label: "Post a job" },
     ],
   },
   {
-    title: "Our work",
+    title: "For tradespeople",
     links: [
-      { href: "/projects", label: "Featured Projects" },
-      { href: "/map", label: "Project Map" },
-      { href: "/contact", label: "Contact" },
+      { href: "/projects", label: "Find a trade" },
+      { href: "/careers", label: "Join the network" },
+      { href: "/map", label: "Trust & verification" },
     ],
   },
 ];
@@ -47,7 +47,7 @@ export function Footer() {
             <Logo />
           </Link>
           <p className="mt-5 max-w-[32ch] text-[15px] leading-[1.7] text-ink/65">
-            A nature-inclusive design and build firm in {company.city}, {company.country}. We plan, design and build.
+            Connecting customers with skilled tradespeople and helping professionals access genuine job opportunities in {company.city}, {company.country}.
           </p>
           {social.length > 0 && (
             <ul className="mt-6 flex gap-2">
@@ -83,7 +83,7 @@ export function Footer() {
         ))}
 
         <div className="col-span-2 lg:col-span-1">
-          <p className={heading}>Office</p>
+          <p className={heading}>GBC contact</p>
           <address className="mt-5 space-y-3 text-[15px] not-italic leading-[1.6] text-ink/75">
             <p>{company.address}</p>
             <p className="text-ink/55">{company.postal}</p>

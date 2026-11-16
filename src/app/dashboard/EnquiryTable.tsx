@@ -5,6 +5,7 @@ export type EnquiryRow = {
   id: string;
   reference: string;
   name: string;
+  service: string;
   project_type: string;
   location: string;
   status: string;
@@ -19,6 +20,9 @@ const badge: Record<string, string> = {
   consultation: "bg-forest-100 text-forest-900",
   proposal: "bg-forest-700 text-bone",
   won: "bg-forest-800 text-bone",
+  scheduled: "bg-forest-100 text-forest-900",
+  in_progress: "bg-forest-700 text-bone",
+  completed: "bg-forest-800 text-bone",
   lost: "bg-stone text-ink",
 };
 
@@ -30,8 +34,8 @@ export function EnquiryTable({ rows, empty, showFollowUp }: { rows: EnquiryRow[]
       <table className="w-full min-w-[640px] text-left text-sm">
         <thead className="border-b border-stone bg-sand text-xs uppercase tracking-wider text-muted">
           <tr>
-            <th className="px-4 py-3 font-medium">Client</th>
-            <th className="px-4 py-3 font-medium">Project</th>
+            <th className="px-4 py-3 font-medium">Customer</th>
+            <th className="px-4 py-3 font-medium">Trade / job</th>
             <th className="px-4 py-3 font-medium">Status</th>
             <th className="px-4 py-3 font-medium">Assigned</th>
             <th className="px-4 py-3 font-medium">{showFollowUp ? "Follow-up" : "Received"}</th>
@@ -44,7 +48,7 @@ export function EnquiryTable({ rows, empty, showFollowUp }: { rows: EnquiryRow[]
                 <Link href={`/dashboard/enquiries/${r.id}`} className="font-medium text-forest-900 underline-offset-4 hover:underline">{r.name}</Link>
                 <div className="text-xs text-muted">{r.reference}</div>
               </td>
-              <td className="px-4 py-3">{r.project_type}<div className="text-xs text-muted">{r.location}</div></td>
+              <td className="px-4 py-3">{r.service} · {r.project_type}<div className="text-xs text-muted">{r.location}</div></td>
               <td className="px-4 py-3"><span className={`rounded-sm px-2 py-0.5 text-xs ${badge[r.status]}`}>{statusLabels[r.status]}</span></td>
               <td className="px-4 py-3 text-muted">{r.assigned ? r.assigned.full_name || r.assigned.email : "Unassigned"}</td>
               <td className={`px-4 py-3 ${r.follow_up_at && r.follow_up_at < today ? "text-red-700" : ""}`}>

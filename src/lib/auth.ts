@@ -15,6 +15,7 @@ export const can = {
   managePortfolio: (r: Role) => r === "admin" || r === "manager" || r === "editor",
   editContent: (r: Role) => r === "admin" || r === "manager" || r === "editor",
   manageTeam: (r: Role) => r === "admin",
+  verifyTradespeople: (r: Role) => r === "admin" || r === "manager",
 };
 
 // Verified against Supabase Auth on every call (getUser validates the JWT with the server).

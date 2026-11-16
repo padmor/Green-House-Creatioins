@@ -10,7 +10,7 @@ import { announcementsSchema, noteSchema, personSchema, projectSchema } from "@/
 
 export type FormResult = { ok?: boolean; error?: string };
 
-const STATUSES = ["new", "contacted", "consultation", "proposal", "won", "lost"] as const;
+const STATUSES = ["new", "contacted", "consultation", "proposal", "won", "scheduled", "in_progress", "completed", "lost"] as const;
 
 // ───────── Enquiries ─────────
 // All writes run as the signed-in user, so row-level security is the final gate.

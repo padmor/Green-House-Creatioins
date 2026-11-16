@@ -1,11 +1,11 @@
-// Static, approved site copy and fallback data (contact details and projects confirmed by GBC).
-// Company facts below come from GBC's verified information sheet. The founding year (2021, from the
-// company LinkedIn profile) is deliberately not shown anywhere until GBC confirms it.
+// Static, approved site copy and fallback data.
+// Public project descriptions are limited to facts that GBC or its associates have made public.
+// Generic category imagery is labelled as illustrative; it is not represented as GBC site photography.
 
 export const company = {
   name: "Green-Building Creations Ltd.",
   short: "GBC",
-  tagline: "We Plan. We Design. We Build.",
+  tagline: "Find skilled hands. Get the job done.",
   city: "Cape Coast",
   country: "Ghana",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "info@gbcghana.com",
@@ -15,14 +15,14 @@ export const company = {
   region: "Central Region",
   address: "Cape Coast, Central Region, Ghana",
   postal: "P. O. Box UC 23, Cape Coast, Ghana",
-  industry: "Construction",
-  positioning: "Nature Inclusive Design & Build Firm",
+  industry: "Trade Services & Job Matching",
+  positioning: "A job-matching service for skilled tradespeople",
   sustainability:
-    "Our work, and how we work, contribute to a sustainable future for our people, our clients and society.",
+    "We support safer worksites, clear job scopes and responsible work practices by connecting clients with skilled trade professionals.",
   // Map centre / office pin (Cape Coast).
   coords: [5.1053, -1.2466] as [number, number],
   mission:
-    "To deliver quality buildings on time, in safe working environments, with responsibility for the environment we build in.",
+    "To make it easier for customers to find skilled tradespeople and for qualified professionals to access genuine work opportunities.",
 };
 
 // Social links appear in the footer only when configured.
@@ -33,51 +33,80 @@ export const social = [
 ].filter((s): s is { label: string; href: string; icon: string } => Boolean(s.href));
 
 export const nav = [
-  { href: "/about", label: "About Us" },
-  { href: "/projects", label: "Featured Projects" },
-  { href: "/map", label: "Interactive Project Map" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "How it works" },
+  { href: "/projects", label: "Find a trade" },
+  { href: "/map", label: "Trust & verification" },
+  { href: "/contact", label: "Post a job" },
 ] as const;
 
 export const footerNav = [
   ...nav,
-  { href: "/services", label: "Services" },
-  { href: "/sustainability", label: "Sustainability" },
-  { href: "/careers", label: "Careers" },
+  { href: "/careers", label: "Join as a tradesperson" },
+  { href: "/sustainability", label: "Worksite standards" },
 ] as const;
 
 export const services = [
   {
-    slug: "plan",
-    verb: "Plan",
-    title: "Planning",
-    summary:
-      "Site appraisal, feasibility, budgeting and programme planning so a project starts with clear scope and realistic expectations.",
-    points: ["Site and feasibility assessment", "Budget and programme planning", "Permit and approvals guidance"],
+    slug: "tiler",
+    verb: "Tile",
+    title: "Tilers",
+    summary: "Find skilled tilers for floor and wall tiling, bathrooms, kitchens, repairs and finishing work.",
+    points: ["Floor and wall installation", "Bathroom and kitchen tiling", "Regrouting and tile repairs"],
   },
   {
-    slug: "design",
-    verb: "Design",
-    title: "Architectural Design",
-    summary:
-      "Concept to construction drawings, shaped around how the building will be used, the local climate and the budget.",
-    points: ["Concept and detailed design", "Construction documentation", "Climate-responsive thinking"],
+    slug: "electrician",
+    verb: "Wire",
+    title: "Electricians",
+    summary: "Connect with electricians for installation, repairs, lighting and electrical maintenance. Indoor wiring requests are referred only to professionals whose CEWP status is verified.",
+    points: ["Lighting and fixture installation", "Fault finding and repairs", "Certified indoor wiring work"],
   },
   {
-    slug: "build",
+    slug: "plumber",
+    verb: "Fix",
+    title: "Plumbers",
+    summary: "Get help with pipework, taps, drainage, bathrooms, water systems and plumbing repairs.",
+    points: ["Pipe and fitting installation", "Leaks and drainage repairs", "Bathroom and water-system work"],
+  },
+  {
+    slug: "carpenter",
+    verb: "Craft",
+    title: "Carpenters",
+    summary: "Find carpenters for doors, roofing timber, cabinetry, furniture, fittings and woodwork repairs.",
+    points: ["Doors, frames and fittings", "Cabinetry and furniture", "Roof and general woodwork"],
+  },
+  {
+    slug: "mason",
     verb: "Build",
-    title: "Building Construction",
-    summary:
-      "Disciplined site management, safe working practice and attention to finish, from foundations to handover.",
-    points: ["Modern apartments, department stores and offices", "Site safety and supervision", "Quality control through to handover"],
+    title: "Masons",
+    summary: "Connect with masons for block laying, plastering, screeding, concrete work and masonry repairs.",
+    points: ["Block laying and plastering", "Concrete and screeding", "Masonry repairs and alterations"],
   },
 ] as const;
 
+export const tradeCategories = [
+  { slug: "tiler", name: "Tilers", singular: "Tiler", summary: "Floor and wall tiling, bathrooms, kitchens, regrouting and tile repairs.", image: "/images/gbc/residential.jpg" },
+  { slug: "electrician", name: "Electricians", singular: "Electrician", summary: "Lighting, installations, fault finding and electrical maintenance.", image: "/images/gbc/commercial.jpg" },
+  { slug: "plumber", name: "Plumbers", singular: "Plumber", summary: "Pipework, taps, drainage, water systems and plumbing repairs.", image: "/images/gbc/institutional.jpg" },
+  { slug: "carpenter", name: "Carpenters", singular: "Carpenter", summary: "Doors, cabinets, furniture, roofing timber and woodwork repairs.", image: "/images/gbc/residential.jpg" },
+  { slug: "mason", name: "Masons", singular: "Mason", summary: "Block laying, plastering, screeding, concrete and masonry repairs.", image: "/images/gbc/institutional.jpg" },
+] as const;
+
+export type TradeName = (typeof tradeCategories)[number]["singular"];
+export type VerifiedTradesperson = {
+  id: string;
+  public_name: string;
+  trade: TradeName;
+  service_area: string;
+  experience_years: number;
+  bio: string;
+  portfolio_url: string | null;
+};
+
 export const values = [
-  { title: "Quality", text: "Work we are prepared to put our name to, checked at every stage." },
-  { title: "Timely delivery", text: "Realistic programmes, honest updates and a team that plans ahead." },
-  { title: "Safe working environments", text: "Safety is part of how every site is set up and run." },
-  { title: "Environmental responsibility", text: "Thoughtful materials, waste and site practice that respect the place we build." },
+  { title: "Verified skills", text: "Trade credentials, identity, references and work evidence are reviewed before a professional is listed as verified." },
+  { title: "Clear job details", text: "Customers describe the work, location, timing and budget so professionals can respond with relevant quotes." },
+  { title: "Safer work", text: "Safety and trade-specific requirements matter. Electrical wiring work is matched only with appropriately certified professionals." },
+  { title: "Accountability", text: "Job requests, follow-ups and agreed next steps are recorded so customers know what happens next." },
 ] as const;
 
 // Seniority groups for staff profiles on the About page, in display order.
@@ -104,56 +133,132 @@ export type Project = {
   longitude: number | null;
   /** Visitor rating summary; absent until the project has at least one rating. */
   rating?: Rating;
+  /** Publicly supported description of the record's status; not a construction-stage claim. */
+  portfolioStatus?: string;
+  /** Disclosure displayed whenever the category image is not a project photograph. */
+  imageNote?: string;
+  /** Public source supporting the project or portfolio reference. */
+  sourceUrl?: string;
 };
 
 export type Rating = { average: number; total: number };
 
-// GBC's projects, shown when the database has no published projects yet
-// (supabase/seed.sql inserts the same records). Details beyond name, type and
-// location are left for GBC to add from the dashboard rather than invented here.
-const project = (slug: string, title: string, category: string, image: string, summary: string): Project => ({
+const illustrativeImageNote = "Illustrative visual — not a photograph of this project.";
+
+const project = (
+  slug: string,
+  title: string,
+  category: string,
+  location: string,
+  image: string,
+  summary: string,
+  body: string,
+  portfolioStatus: string,
+  scope: string,
+  sourceUrl: string,
+): Project => ({
   slug,
   title,
   category,
-  location: "Cape Coast, Ghana",
+  location,
   year: null,
   summary,
-  body: summary,
+  body,
   client: null,
-  scope: null,
+  scope,
   image_urls: [image],
   is_placeholder: false,
   featured: true,
   latitude: null,
   longitude: null,
+  portfolioStatus,
+  imageNote: illustrativeImageNote,
+  sourceUrl,
 });
 
+// Documented references and broad experience statements.
+// The first two entries are specific public references; the remaining entries reflect GBC's own
+// company profile, which confirms these building types but does not publish project names or addresses.
 export const fallbackProjects: Project[] = [
-  project("the-ridge-residences", "The Ridge Residences", "Residential", "/images/gbc/residential.jpg",
-    "A residential project by Green-Building Creations Ltd. in Cape Coast, Ghana."),
-  project("harbour-view-office-complex", "Harbour View Office Complex", "Commercial", "/images/gbc/commercial.jpg",
-    "A commercial office project by Green-Building Creations Ltd. in Cape Coast, Ghana."),
-  project("gbc-training-centre", "GBC Training Centre", "Institutional", "/images/gbc/institutional.jpg",
-    "An institutional project by Green-Building Creations Ltd. in Cape Coast, Ghana."),
+  project(
+    "three-bedroom-residential-house",
+    "Three-Bedroom Residential House",
+    "Residential",
+    "Cape Coast, Ghana",
+    "/images/gbc/residential.jpg",
+    "A three-bedroom plan is recorded as built in Cape Coast. A former GBC intern's public work history describes a structural drawing contribution and construction-site supervision during their placement.",
+    "A former GBC intern's public professional profile records that a three-bedroom residential plan was built in Cape Coast. The same work-history entry says the intern proposed a structural drawing and supported construction supervision, measurement checks and site safety during a June–July 2024 internship at Green Building Creations.\n\nThis listing is limited to the contribution described in that public profile. The client, exact site, project date and full contractual scope have not been publicly identified.",
+    "Built · contribution documented",
+    "Structural drawing contribution; construction supervision; measurement and safety checks, as publicly described.",
+    "https://himalayas.app/@felixamnkwahkwasi",
+  ),
+  project(
+    "50-room-student-hostel-ucc",
+    "50-Room Student Hostel Project",
+    "Institutional",
+    "University of Cape Coast, Cape Coast, Ghana",
+    "/images/gbc/institutional.jpg",
+    "A five-storey, 50-room hostel project brief for the University of Cape Coast, publicly shared by GBC's founder. The post describes the site constraints and design approach, but does not confirm construction or handover.",
+    "GBC's founder publicly shared a project description for a 50-room hostel at the University of Cape Coast. The brief describes a 70 × 80 ft site (about 520 m²), five storeys with ten rooms per floor, an east–west orientation, passive cross-ventilation and acoustic measures responding to nearby road conditions.\n\nThe same public post outlines a hybrid pad-and-raft foundation approach and damp-protection measures for the coastal ground conditions. It is presented here as a published project brief. The available post does not establish that construction was completed or that the building was handed over.",
+    "Project brief · build status unconfirmed",
+    "Five-storey / 50-room brief; site planning, massing, ventilation, acoustic response and foundation strategy, as described in the public post.",
+    "https://gh.linkedin.com/in/dr-gideon-charles-mensah-a33b77121",
+  ),
+  project(
+    "modern-apartment-portfolio",
+    "Modern Apartment Developments",
+    "Residential",
+    "Individual project locations not publicly disclosed",
+    "/images/gbc/residential.jpg",
+    "GBC's public company profile states that the firm has built modern apartments. Individual project names, clients, sites and completion dates are not itemised in the public profile.",
+    "GBC's company profile describes modern apartments among the building types delivered by the firm. The public material does not identify individual apartment developments, client names, addresses, project dates or completion details. This entry therefore records the company's stated area of experience rather than inventing a project name.",
+    "Company-stated portfolio experience",
+    "Modern apartment development experience; individual project records are not publicly itemised.",
+    "https://gh.linkedin.com/company/green-building-creations",
+  ),
+  project(
+    "department-store-portfolio",
+    "Department Store Projects",
+    "Commercial",
+    "Individual project locations not publicly disclosed",
+    "/images/gbc/commercial.jpg",
+    "GBC's public company profile lists department stores among the building types delivered by the firm. Individual project names, clients, sites and completion dates are not itemised publicly.",
+    "GBC's company profile states that the firm has built department stores. The public company information does not provide individual project names, client details, addresses, dates or a breakdown of the work carried out. This entry is a transparent summary of the company's stated commercial experience, not a named case study.",
+    "Company-stated portfolio experience",
+    "Department-store / retail building experience; individual project records are not publicly itemised.",
+    "https://gh.linkedin.com/company/green-building-creations",
+  ),
+  project(
+    "office-development-portfolio",
+    "Office Developments",
+    "Commercial",
+    "Individual project locations not publicly disclosed",
+    "/images/gbc/commercial.jpg",
+    "GBC's public company profile lists offices among the building types delivered by the firm. Individual project names, clients, sites and completion dates are not itemised publicly.",
+    "GBC's company profile states that the firm has built offices. The public company information does not identify individual office projects, clients, addresses, dates or project-specific scope. This entry is a summary of the company's stated experience, not a named case study.",
+    "Company-stated portfolio experience",
+    "Office-building experience; individual project records are not publicly itemised.",
+    "https://gh.linkedin.com/company/green-building-creations",
+  ),
 ];
 
 // Keys editable from the dashboard (table: site_content). Values here are the defaults.
 export const editableContent = {
-  "home.hero.eyebrow": "Sustainable spaces. Lasting impact.",
-  "home.hero.title": "We Plan. We Design. We Build.",
+  "home.hero.eyebrow": "Your job. The right professional.",
+  "home.hero.title": "Find the right hands for the job.",
   "home.hero.subtitle":
-    "Planning, architectural design and building construction from Cape Coast, Ghana, delivered with care for quality, safety and the environment.",
-  "home.about.title": "Building a greener, smarter tomorrow.",
+    "Find tilers, electricians, plumbers, carpenters and masons. Post a job, get connected with a suitable professional and keep track of the work.",
+  "home.about.title": "Skilled trades. Clear requests. Better job connections.",
   "home.intro":
-    "Green-Building Creations Ltd. is a nature-inclusive design and build firm in Cape Coast, Ghana, committed to sustainable, innovative and high-quality building solutions. We create spaces that respect the environment, enhance communities and stand the test of time.",
+    "Green-Building Creations Ltd. is developing a job-matching service that helps customers find skilled tradespeople and helps professionals access genuine work. Profiles are published as verified only after the required checks have been completed.",
   "home.locations":
-    "Our projects are located across Cape Coast and surrounding areas, creating sustainable spaces that support local communities and the environment.",
+    "GBC is based in Cape Coast. Job requests can be submitted with the work location, and availability is confirmed with the customer before a professional is matched.",
   "home.careers":
-    "We're always looking for passionate people who want to make a difference in sustainable construction and design.",
+    "Are you a tiler, electrician, plumber, carpenter or mason? Apply to join the network. Your profile will be reviewed before it can appear as verified.",
   "about.story":
-    "Green-Building Creations Ltd. (GBC) is based in Cape Coast, in Ghana's Central Region. We bring planning, architectural design and building construction under one roof, from modern apartments to department stores and offices, so clients deal with one accountable team from the first sketch to handover. We work to deliver quality on time, within safe working environments.",
+    "Green-Building Creations Ltd. (GBC) is based in Cape Coast, Ghana. We are shifting the website from a building portfolio into a job-matching service for customers who need skilled trade work and professionals looking for genuine jobs. Customers can post a job request, share the location and requirements, and receive follow-up from the GBC team. Tradespeople apply to join the network and are reviewed before a verified profile is published.",
   "sustainability.intro":
-    "Our work, and how we work, contribute to a sustainable future for our people, our clients and society. Building responsibly means considering the site, the materials and the people who will use the building long after we leave.",
+    "A dependable job site begins with clear scopes, safe work practices and transparent expectations. We review trade evidence before listing a professional as verified and keep electrical wiring requests subject to the relevant certification checks.",
 } as const;
 
 export type ContentKey = keyof typeof editableContent;
@@ -176,18 +281,21 @@ export type AnnouncementItem = {
 export type Announcement = Omit<AnnouncementItem, "enabled" | "ends_on">;
 
 export const enquiryOptions = {
-  services: ["Planning", "Architectural design", "Building construction", "Design and build", "Not sure yet"],
-  projectTypes: ["House / residential", "Apartments", "Commercial / office", "School / institutional", "Retail / department store", "Renovation / extension", "Other"],
-  budgets: ["Under GH₵ 250,000", "GH₵ 250,000 – 1,000,000", "GH₵ 1,000,000 – 5,000,000", "Above GH₵ 5,000,000", "Not decided"],
-  timelines: ["As soon as possible", "Within 3 months", "3 – 6 months", "6 – 12 months", "Just exploring"],
+  services: ["Tiler", "Electrician", "Plumber", "Carpenter", "Mason", "Other trade"],
+  projectTypes: ["Installation", "Repair", "Renovation", "Maintenance", "Emergency work", "Other"],
+  budgets: ["Need an estimate", "Labour only", "Labour and materials", "I have a fixed budget", "Discuss with me"],
+  timelines: ["Urgent — as soon as possible", "Within 2–3 days", "This week", "Within 2 weeks", "Flexible"],
 } as const;
 
 export const statusLabels: Record<string, string> = {
-  new: "New enquiry",
-  contacted: "Contacted",
-  consultation: "Consultation",
-  proposal: "Proposal",
-  won: "Won",
-  lost: "Lost",
+  new: "New job request",
+  contacted: "Customer contacted",
+  consultation: "Job scope confirmed",
+  proposal: "Quote shared",
+  won: "Professional hired",
+  scheduled: "Work scheduled",
+  in_progress: "Work in progress",
+  completed: "Completed",
+  lost: "Not proceeding",
 };
-export const statusOrder = ["new", "contacted", "consultation", "proposal", "won", "lost"] as const;
+export const statusOrder = ["new", "contacted", "consultation", "proposal", "won", "scheduled", "in_progress", "completed", "lost"] as const;

@@ -133,7 +133,7 @@ export default function ProjectMap({
           <Popup className="gbc-popup" minWidth={240} maxWidth={240} closeButton>
             <Link href={`/projects/${p.slug}`} className="block">
               {/* eslint-disable-next-line @next/next/no-img-element -- Leaflet popup, sized by CSS */}
-              <img src={p.image} alt={`${p.title}, ${p.location}`} className="gbc-popup__img" />
+              <img src={p.image} alt={p.imageNote ? `${p.category} illustrative architecture visual` : `${p.title}, ${p.location}`} className="gbc-popup__img" />
             </Link>
             <div className="gbc-popup__body">
               <p className="gbc-popup__cat">{p.category}</p>
@@ -142,6 +142,7 @@ export default function ProjectMap({
                 {p.location}
                 {p.approximate && <span> · approximate position</span>}
               </p>
+              {p.imageNote && <p className="mt-2 text-[10px] uppercase tracking-wide text-muted">{p.imageNote}</p>}
               <Link href={`/projects/${p.slug}`} className="gbc-popup__link">
                 View project
               </Link>
