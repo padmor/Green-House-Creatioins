@@ -28,7 +28,7 @@ const applicationSchema = z.object({
   qualification_details: z.string().trim().max(1000).optional().default(""),
   qualification_reference: z.string().trim().max(160).optional().default(""),
   cewp_reference: z.string().trim().max(160).optional().default(""),
-  portfolio_url: z.union([z.literal(""), z.url("Enter a valid link beginning with https://")]).optional().default(""),
+  portfolio_url: z.union([z.literal(""), z.string().trim().regex(/^https:\/\/\S+$/, "Use a complete HTTPS link.")]).optional().default(""),
   bio: z.string().trim().max(1200).optional().default(""),
   consent: z.literal("on", { error: "Please agree that GBC can review and contact you about this application." }),
   website: z.string().max(0).optional().default(""),
