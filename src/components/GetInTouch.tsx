@@ -8,7 +8,7 @@ const contacts = [
   { label: "Office", value: company.address, href: "/map" },
 ];
 
-// "Get in touch" band: a short invitation with the "Enquire now" button on one line, then the
+// "Get a job moving" band: a short invitation with the "Post a job" button on one line, then the
 // three ways to reach us set as plain text under a hairline.
 export function GetInTouch() {
   return (
@@ -18,10 +18,10 @@ export function GetInTouch() {
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-forest-700">Get in touch</p>
             <h2 id="touch-heading" className="mt-4 text-[2rem] font-semibold leading-[1.1] tracking-[-0.025em] sm:text-[2.5rem]">
-              Have a project in mind?
+              Need a skilled tradesperson?
             </h2>
             <p className="mt-4 max-w-[46ch] text-[15px] leading-[1.7] text-forest-900/75 sm:text-base">
-              Tell us what you are planning and a member of the team will get back to you.
+              Tell us what needs doing and where. GBC will review your job request and confirm the next step.
             </p>
           </div>
           <Link
