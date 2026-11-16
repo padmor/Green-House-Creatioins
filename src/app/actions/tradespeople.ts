@@ -126,7 +126,7 @@ export async function submitTradespersonApplication(
 
 /** Only GBC admins and managers can make a verification decision. */
 export async function reviewTradesperson(formData: FormData): Promise<void> {
-  await requireStaff((role) => can.verifyTradespeople(role));
+  const staff = await requireStaff((role) => can.verifyTradespeople(role));
 
   const id = z.uuid().safeParse(formData.get("id"));
   if (!id.success) redirect("/dashboard/tradespeople?error=invalid");
@@ -167,6 +167,8 @@ export async function reviewTradesperson(formData: FormData): Promise<void> {
     verification_notes: notes,
     application_status: applicationStatus,
     published,
+    verified_by: published ? staff.id : null,
+    verified_at: published ? new Date().toISOString() : null,
   }).eq("id", id.data);
 
   if (error) {
