@@ -32,9 +32,10 @@ export async function submitEnquiry(_prev: EnquiryState, formData: FormData): Pr
   // Honeypot: pretend success so bots learn nothing.
   if (raw.website) return { ok: true, reference: "GBC-00-0000" };
 
-  // The compact "Get in touch" form asks only for the project type; record the rest as not yet given.
+  // The compact job form asks for the trade and a short description; fill safe defaults
+  // for the fields shown only in the full job-posting flow.
   if (raw.quick) {
-    raw.service ||= "Not sure yet";
+    raw.project_type ||= "Other";
     raw.location ||= "To be confirmed";
   }
 
@@ -57,8 +58,8 @@ export async function submitEnquiry(_prev: EnquiryState, formData: FormData): Pr
 
   const db = createAdminClient();
   if (!db) {
-    console.error("[enquiry] Supabase service credentials are not configured");
-    return { ok: false, values: raw, message: "We could not save your enquiry right now. Please call or email us instead." };
+    console.error("[job-request] Supabase service credentials are not configured");
+    return { ok: false, values: raw, message: "We could not save your job request right now. Please call or email us instead." };
   }
 
   const d = parsed.data;
@@ -81,8 +82,8 @@ export async function submitEnquiry(_prev: EnquiryState, formData: FormData): Pr
     .single();
 
   if (error || !data) {
-    console.error("[enquiry] insert failed", error?.message);
-    return { ok: false, values: raw, message: "We could not save your enquiry right now. Please try again or contact us directly." };
+    console.error("[job-request] insert failed", error?.message);
+    return { ok: false, values: raw, message: "We could not save your job request right now. Please try again or contact us directly." };
   }
 
   await sendEnquiryEmails({ ...d, reference: data.reference });
