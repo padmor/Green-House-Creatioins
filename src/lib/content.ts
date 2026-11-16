@@ -290,9 +290,12 @@ export const enquiryOptions = {
 export const statusLabels: Record<string, string> = {
   new: "New job request",
   contacted: "Customer contacted",
-  consultation: "Requirements being checked",
+  consultation: "Job scope confirmed",
   proposal: "Quote shared",
   won: "Professional hired",
-  lost: "Closed / not proceeding",
+  scheduled: "Work scheduled",
+  in_progress: "Work in progress",
+  completed: "Completed",
+  lost: "Not proceeding",
 };
-export const statusOrder = ["new", "contacted", "consultation", "proposal", "won", "lost"] as const;
+export const statusOrder = ["new", "contacted", "consultation", "proposal", "won", "scheduled", "in_progress", "completed", "lost"] as const;
