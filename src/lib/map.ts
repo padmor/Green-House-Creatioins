@@ -7,6 +7,7 @@ export type MapProject = {
   category: string;
   location: string;
   image: string;
+  imageNote?: string;
   latitude: number;
   longitude: number;
   /** True when the project has no saved coordinates and is shown near the city centre instead. */
@@ -28,7 +29,7 @@ export function toMapProjects(projects: Project[]): MapProject[] {
   const [lat0, lng0] = company.coords;
   const r = 0.025; // about 2.5 km
   return mappable.map((p, i) => {
-    const base = { slug: p.slug, title: p.title, category: p.category, location: p.location, image: coverFor(p, i) };
+    const base = { slug: p.slug, title: p.title, category: p.category, location: p.location, image: coverFor(p, i), imageNote: p.imageNote };
     if (p.latitude != null && p.longitude != null) {
       return { ...base, latitude: p.latitude, longitude: p.longitude, approximate: false };
     }
