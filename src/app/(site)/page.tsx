@@ -22,7 +22,7 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate flex min-h-[640px] items-center justify-center overflow-hidden bg-forest-950 text-white lg:h-svh lg:max-h-[720px]">
+      <section className="relative isolate flex min-h-[640px] items-center justify-center overflow-hidden bg-bone text-black lg:h-svh lg:max-h-[720px]">
         <ArchImage
           alt="Modern glass building at dusk with palm trees and a reflecting pool"
           variant={1}
@@ -31,22 +31,22 @@ export default async function HomePage() {
           position="center 60%"
           className="absolute inset-0 -z-10"
         />
-        <div className="absolute inset-0 -z-10 bg-forest-950/45" />
+        <div className="absolute inset-0 -z-10 bg-bone/65" />
         <div className="container-gbc pb-20 pt-[calc(72px+4rem)] text-center">
-          <p className="rise text-[11px] font-semibold uppercase tracking-[0.32em] text-sage" style={delay(0.2)}>{content["home.hero.eyebrow"]}</p>
-          <h1 className="rise mx-auto mt-5 max-w-4xl text-[clamp(2.4rem,6vw,4.5rem)] font-bold uppercase leading-[1.02] tracking-tight" style={delay(0.35)}>
+          <p className="rise text-[11px] font-semibold uppercase tracking-[0.32em] text-black/70" style={delay(0.2)}>{content["home.hero.eyebrow"]}</p>
+          <h1 className="rise mx-auto mt-5 max-w-4xl text-[clamp(2.4rem,6vw,4.5rem)] font-bold uppercase leading-[1.02] tracking-tight text-black" style={delay(0.35)}>
             We plan. We design.
             <br />
             We build.
           </h1>
-          <p className="rise mx-auto mt-6 max-w-[48ch] text-base leading-relaxed text-white/85 sm:text-lg" style={delay(0.45)}>
+          <p className="rise mx-auto mt-6 max-w-[48ch] text-base leading-relaxed text-black/80 sm:text-lg" style={delay(0.45)}>
             {content["home.hero.subtitle"]}
           </p>
           <div className="rise mt-9 flex flex-wrap items-center justify-center gap-4" style={delay(0.55)}>
-            <Link href="/projects" className={`${btn} bg-bone text-ink hover:bg-white`}>
+            <Link href="/projects" className={`${btn} bg-black text-white hover:bg-black/85`}>
               Our work
             </Link>
-            <Link href="/contact#enquiry" className={`${btn} border border-white/70 text-white hover:bg-white hover:text-ink`}>
+            <Link href="/contact#enquiry" className={`${btn} border border-black/55 text-black hover:bg-black hover:text-white`}>
               Contact us
             </Link>
           </div>
@@ -78,13 +78,13 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured projects */}
+      {/* Documented project experience */}
       <section className="bg-white py-20 lg:py-32" aria-labelledby="projects-heading">
         <div className="container-gbc">
           <ProjectTabs
             projects={shown}
             categories={projectCategories}
-            heading={<Heading id="projects-heading" eyebrow="Featured projects" title="Our Latest Projects" />}
+            heading={<Heading id="projects-heading" eyebrow="Selected work & project briefs" title="Documented Project Experience" />}
           />
         </div>
       </section>
@@ -93,7 +93,7 @@ export default async function HomePage() {
       <section className="grid bg-bone lg:grid-cols-2" aria-labelledby="locations-heading">
         <div className="flex items-center px-5 py-16 sm:px-8 lg:py-20 lg:pl-[max(3rem,calc((100vw-80rem)/2+3rem))] lg:pr-12">
           <div className="max-w-md">
-            <Heading id="locations-heading" eyebrow="Our project locations" title="Cape Coast, Ghana" />
+            <Heading id="locations-heading" eyebrow="Project locations" title="Cape Coast, Ghana" />
             <p data-reveal style={delay(0.12)} className="text-body mt-6">{content["home.locations"]}</p>
             <Link data-reveal style={delay(0.24)} href="/map" className={`${btn} mt-8 bg-ink text-bone hover:bg-ink-soft`}>
               View project map
