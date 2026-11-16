@@ -22,7 +22,7 @@ export function EnquiryControls({
   canAssign: boolean;
 }) {
   const [state, action, pending] = useActionState(updateEnquiry, idle);
-  useResultToast(state, "Enquiry updated");
+  useResultToast(state, "Job request updated");
   return (
     <form action={action} className="mt-4 space-y-4">
       <input type="hidden" name="id" value={enquiry.id} />
@@ -70,7 +70,7 @@ export function NoteForm({ enquiryId }: { enquiryId: string }) {
         </select>
       </div>
       <label htmlFor="body" className="sr-only">Note</label>
-      <textarea id="body" name="body" rows={3} required maxLength={4000} className="field" placeholder="Record what was discussed or agreed…" />
+      <textarea id="body" name="body" rows={3} required maxLength={4000} className="field" placeholder="Record the customer discussion, quote or agreed next step…" />
       <div className="flex items-center gap-4">
         <button className="btn btn-outline" disabled={pending}><BusyLabel pending={pending} busy="Adding…">Add to log</BusyLabel></button>
         <Result s={state} />
