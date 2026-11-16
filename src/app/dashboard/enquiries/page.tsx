@@ -14,7 +14,7 @@ export default async function EnquiriesPage({ searchParams }: { searchParams: Pr
 
   let q = db
     .from("enquiries")
-    .select("id,reference,name,project_type,location,status,follow_up_at,created_at,assigned:profiles!enquiries_assigned_to_fkey(full_name,email)")
+    .select("id,reference,name,service,project_type,location,status,follow_up_at,created_at,assigned:profiles!enquiries_assigned_to_fkey(full_name,email)")
     .order("created_at", { ascending: false })
     .limit(200);
   if (status && (statusOrder as readonly string[]).includes(status)) q = q.eq("status", status);
