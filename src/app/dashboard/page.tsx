@@ -11,7 +11,7 @@ export default async function DashboardHome({ searchParams }: { searchParams: Pr
   const { denied } = await searchParams;
   const db = await createClient();
   const today = new Date().toISOString().slice(0, 10);
-  const open = ["new", "contacted", "consultation", "proposal"];
+  const open = ["new", "contacted", "consultation", "proposal", "won", "scheduled", "in_progress"];
 
   const showEnquiries = can.workEnquiries(staff.role);
   const [all, fresh, due] = showEnquiries
