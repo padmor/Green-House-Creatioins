@@ -123,7 +123,7 @@ export default async function TradespeopleReviewPage({
                   {person.trade === "Electrician" && (
                     <label className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950">
                       <input type="checkbox" name="cewp_verified" defaultChecked={person.cewp_verified} className="mt-0.5 h-4 w-4 accent-forest-800" />
-                      <span><strong>CEWP independently verified</strong><span className="mt-1 block text-xs">Required before this electrician can be published for indoor wiring work.</span></span>
+                      <span><strong>CEWP independently verified</strong><span className="mt-1 block text-xs">Required before this electrician can be published for indoor wiring work.</span><a className="mt-2 inline-block text-xs font-semibold underline underline-offset-4" href="https://www.energycom.gov.gh/index.php/initiatives/electrical-wiring" target="_blank" rel="noopener noreferrer">Energy Commission verification guidance ↗</a><a className="mt-1 block text-xs font-semibold underline underline-offset-4" href="https://www.energycom.gov.gh/index.php/documents/category/22-cewp-register?download=74%3Acentral-region" target="_blank" rel="noopener noreferrer">Central Region CEWP register ↗</a></span>
                     </label>
                   )}
                   {person.trade !== "Electrician" && <input type="hidden" name="cewp_verified" value="off" />}
