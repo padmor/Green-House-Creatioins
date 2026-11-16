@@ -24,7 +24,7 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="relative isolate flex min-h-[640px] items-center justify-center overflow-hidden bg-bone text-black lg:h-svh lg:max-h-[720px]">
         <ArchImage
-          alt="Modern glass building at dusk with palm trees and a reflecting pool"
+          alt="Illustrative architectural image of a modern glass building at dusk with palm trees and a reflecting pool"
           variant={1}
           priority
           sizes="100vw"
@@ -51,6 +51,9 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
+        <p className="absolute bottom-4 right-5 bg-bone/85 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-black/75">
+          Illustrative architectural image
+        </p>
       </section>
 
       {/* About GBC */}
