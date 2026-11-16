@@ -105,7 +105,7 @@ export default async function ProjectPage({ params }: Props) {
             </div>
           </div>
           <div>
-            <ProjectGallery images={images} title={p.title} />
+            <ProjectGallery images={images} title={p.title} illustrative={Boolean(p.imageNote)} />
             {p.imageNote && (
               <p className="mt-3 text-[10px] font-medium uppercase tracking-[0.1em] text-muted">{p.imageNote}</p>
             )}
