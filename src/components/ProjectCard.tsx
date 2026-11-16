@@ -31,7 +31,7 @@ export function ProjectCard({
     >
       <ArchImage
         src={p.image_urls[0]}
-        alt={`${p.title}, ${p.location}`}
+        alt={p.imageNote ? `${p.category} illustrative architecture visual` : `${p.title}, ${p.location}`}
         variant={artFor(p.category, i)}
         className="absolute inset-0 -z-10 [&_img]:transition-transform [&_img]:duration-700 [&_img]:ease-out group-hover:[&_img]:scale-[1.05]"
         sizes={feature ? "(min-width: 1024px) 55vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
