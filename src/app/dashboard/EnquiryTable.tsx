@@ -20,6 +20,9 @@ const badge: Record<string, string> = {
   consultation: "bg-forest-100 text-forest-900",
   proposal: "bg-forest-700 text-bone",
   won: "bg-forest-800 text-bone",
+  scheduled: "bg-forest-100 text-forest-900",
+  in_progress: "bg-forest-700 text-bone",
+  completed: "bg-forest-800 text-bone",
   lost: "bg-stone text-ink",
 };
 
