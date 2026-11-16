@@ -58,7 +58,7 @@ export default async function DashboardHome({ searchParams }: { searchParams: Pr
           </section>
         </>
       ) : (
-        <p className="text-muted">Use the menu above to manage trade applications and website content.</p>
+        <p className="text-muted">Use the menu above to manage website content.</p>
       )}
     </div>
   );
