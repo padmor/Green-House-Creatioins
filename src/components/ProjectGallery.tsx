@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 // Project photos: a large cover plus thumbnails; any photo opens full-screen.
 // Uses a native <dialog> for focus trapping and Escape-to-close.
-export function ProjectGallery({ images, title }: { images: string[]; title: string }) {
+export function ProjectGallery({ images, title, illustrative = false }: { images: string[]; title: string; illustrative?: boolean }) {
   const [open, setOpen] = useState<number | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const many = images.length > 1;
@@ -27,7 +27,9 @@ export function ProjectGallery({ images, title }: { images: string[]; title: str
     return () => window.removeEventListener("keydown", onKey);
   }, [open, many, images.length]);
 
-  const alt = (i: number) => `${title}, photo ${i + 1} of ${images.length}`;
+  const alt = (i: number) => illustrative
+    ? `${title}, illustrative reference image ${i + 1} of ${images.length}; not a project photograph`
+    : `${title}, photo ${i + 1} of ${images.length}`;
 
   return (
     <>
