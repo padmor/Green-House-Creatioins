@@ -39,11 +39,11 @@ export async function sendEnquiryEmails(e: EnquiryEmail) {
         from,
         to: managers,
         replyTo: e.email,
-        subject: `New enquiry ${e.reference}: ${e.project_type} in ${e.location}`,
-        html: `<p><strong>${esc(e.name)}</strong> sent a new enquiry (${esc(e.reference)}).</p>
+        subject: `New job request ${e.reference}: ${e.service} in ${e.location}`,
+        html: `<p><strong>${esc(e.name)}</strong> sent a new job request (${esc(e.reference)}).</p>
 <p>${esc(e.service)} · ${esc(e.project_type)} · ${esc(e.location)}<br>${esc(e.email)} · ${esc(e.phone)}</p>
 <blockquote>${esc(e.message).replace(/\n/g, "<br>")}</blockquote>
-<p><a href="${siteUrl}/dashboard/enquiries">Open the dashboard</a></p>`,
+<p><a href="${siteUrl}/dashboard/enquiries">Open job desk</a></p>`,
       }),
     );
   }
@@ -52,9 +52,9 @@ export async function sendEnquiryEmails(e: EnquiryEmail) {
     resend.emails.send({
       from,
       to: e.email,
-      subject: `We have received your enquiry (${e.reference})`,
+      subject: `We have received your job request (${e.reference})`,
       html: `<p>Dear ${esc(e.name)},</p>
-<p>Thank you for contacting ${esc(company.name)}. We have received your enquiry, reference <strong>${esc(e.reference)}</strong>, and a member of our team will be in touch.</p>
+<p>Thank you for contacting ${esc(company.name)}. We have received your job request, reference <strong>${esc(e.reference)}</strong>, and a member of our team will be in touch.</p>
 <p>${esc(company.tagline)}</p>`,
     }),
   );
