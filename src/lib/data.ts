@@ -16,6 +16,12 @@ import {
 // Public reads. Falls back to approved defaults / clearly-labelled placeholders
 // so the site renders before the database is connected or populated.
 
+const retiredStarterProjectSlugs = new Set([
+  "the-ridge-residences",
+  "harbour-view-office-complex",
+  "gbc-training-centre",
+]);
+
 export async function getProjects(): Promise<Project[]> {
   const db = createPublicClient();
   if (!db) return fallbackProjects;
@@ -28,8 +34,22 @@ export async function getProjects(): Promise<Project[]> {
       .order("year", { ascending: false, nullsFirst: false }),
     getRatings(),
   ]);
-  if (error || !data || data.length === 0) return fallbackProjects;
-  return (data as Project[]).map((p) => (ratings[p.slug] ? { ...p, rating: ratings[p.slug] } : p));
+  if (error || !data) return fallbackProjects;
+
+  // Remove the old unverified starter records, enrich any matching database rows with the
+  // sourced copy/disclosure, and append the documented references if the database has not
+  // been populated with them yet. Manager-added projects remain intact.
+  const published = (data as Project[])
+    .filter((p) => !retiredStarterProjectSlugs.has(p.slug))
+    .map((p) => {
+      const reference = fallbackProjects.find((candidate) => candidate.slug === p.slug);
+      const merged = reference
+        ? { ...p, ...reference, year: p.year ?? reference.year }
+        : p;
+      return ratings[p.slug] ? { ...merged, rating: ratings[p.slug] } : merged;
+    });
+  const additions = fallbackProjects.filter((candidate) => !published.some((p) => p.slug === candidate.slug));
+  return [...published, ...additions];
 }
 
 /** Visitors can rate only when the server can record ratings (service credentials configured). */
