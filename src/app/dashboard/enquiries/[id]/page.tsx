@@ -5,7 +5,7 @@ import { can, requireStaff } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { EnquiryControls, NoteForm } from "./Forms";
 
-export const metadata: Metadata = { title: "Enquiry" };
+export const metadata: Metadata = { title: "Job Request" };
 
 const kindLabel: Record<string, string> = {
   note: "Note", call: "Call", email: "Email", meeting: "Meeting", status_change: "Status", assignment: "Assignment",
@@ -25,14 +25,14 @@ export default async function EnquiryPage({ params }: { params: Promise<{ id: st
   ]);
 
   const details: [string, string | null][] = [
-    ["Email", e.email], ["Phone", e.phone], ["Organisation", e.organisation], ["Service", e.service],
-    ["Project type", e.project_type], ["Location", e.location], ["Budget", e.budget_range], ["Timeline", e.timeline],
+    ["Email", e.email], ["Phone", e.phone], ["Trade needed", e.service],
+    ["Job type", e.project_type], ["Job location", e.location], ["Budget / quote preference", e.budget_range], ["When needed", e.timeline],
   ];
 
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/dashboard/enquiries" className="text-sm text-muted hover:text-forest-900">← Enquiries</Link>
+        <Link href="/dashboard/enquiries" className="text-sm text-muted hover:text-forest-900">← Job requests</Link>
         <h1 className="mt-2 text-3xl text-forest-900">{e.name}</h1>
         <p className="text-sm text-muted">{e.reference} · received {new Date(e.created_at).toLocaleString("en-GB")}</p>
       </div>
@@ -40,7 +40,7 @@ export default async function EnquiryPage({ params }: { params: Promise<{ id: st
       <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-8">
           <section className="border border-stone bg-white p-6">
-            <h2 className="text-xl text-forest-900">Client and project</h2>
+            <h2 className="text-xl text-forest-900">Customer and job details</h2>
             <dl className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
               {details.filter(([, v]) => v).map(([k, v]) => (
                 <div key={k}>
@@ -52,12 +52,12 @@ export default async function EnquiryPage({ params }: { params: Promise<{ id: st
                 </div>
               ))}
             </dl>
-            <h3 className="eyebrow mt-6">Requirements</h3>
+            <h3 className="eyebrow mt-6">Job description</h3>
             <p className="mt-2 whitespace-pre-wrap leading-relaxed">{e.message}</p>
           </section>
 
           <section className="border border-stone bg-white p-6">
-            <h2 className="text-xl text-forest-900">Communication log</h2>
+            <h2 className="text-xl text-forest-900">Job activity log</h2>
             <NoteForm enquiryId={e.id} />
             <ol className="mt-6 space-y-4">
               {(notes ?? []).map((n) => {
