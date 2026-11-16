@@ -11,7 +11,12 @@ exception when duplicate_object then null; end $$;
 do $$ begin
   create type enquiry_status as enum
     ('new', 'contacted', 'consultation', 'proposal', 'won', 'lost');
-exception when duplicate_object then null; end $$;
+exception when duplicate_object then null; end $;
+
+-- Job progress stages for the customer job desk.
+alter type public.enquiry_status add value if not exists 'scheduled';
+alter type public.enquiry_status add value if not exists 'in_progress';
+alter type public.enquiry_status add value if not exists 'completed';
 
 do $$ begin
   create type note_kind as enum ('note', 'call', 'email', 'meeting', 'status_change', 'assignment');
