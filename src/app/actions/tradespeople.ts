@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { can, requireStaff } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendTradespersonApplicationNotification } from "@/lib/notify";
 
 const trades = ["Tiler", "Electrician", "Plumber", "Carpenter", "Mason"] as const;
 const qualificationTypes = [
@@ -108,6 +109,15 @@ export async function submitTradespersonApplication(
     return { values: raw, message: "We could not save your application. Please try again or contact GBC." };
   }
 
+  await sendTradespersonApplicationNotification({
+    public_name: v.public_name,
+    full_name: v.full_name,
+    email: v.email,
+    phone: v.phone,
+    trade: v.trade,
+    service_area: v.service_area,
+  });
+
   return {
     ok: true,
     message: "Your application has been received. It is pending review and will not appear in the public directory until verification is complete.",
@@ -166,5 +176,7 @@ export async function reviewTradesperson(formData: FormData): Promise<void> {
 
   revalidatePath("/dashboard/tradespeople");
   revalidatePath("/projects");
+  revalidatePath("/services");
+  revalidatePath("/");
   redirect(published ? "/dashboard/tradespeople?verified=1" : decision === "reject" ? "/dashboard/tradespeople?rejected=1" : "/dashboard/tradespeople?reviewed=1");
 }
