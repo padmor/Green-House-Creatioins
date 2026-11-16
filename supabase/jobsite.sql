@@ -2,6 +2,11 @@
 -- Apply once in the Supabase SQL editor after the existing GBC schema.
 -- No artisan is public or marked verified merely by submitting this application.
 
+-- Job progress stages for the customer job desk.
+alter type public.enquiry_status add value if not exists 'scheduled';
+alter type public.enquiry_status add value if not exists 'in_progress';
+alter type public.enquiry_status add value if not exists 'completed';
+
 create table if not exists public.tradespeople (
   id uuid primary key default gen_random_uuid(),
   full_name text not null check (char_length(trim(full_name)) between 2 and 120),
