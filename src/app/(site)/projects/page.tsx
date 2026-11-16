@@ -7,8 +7,8 @@ import { projectCategories } from "@/lib/content";
 import { getProjects } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Featured Projects",
-  description: "Residential, commercial and institutional projects by Green-Building Creations Ltd. in Cape Coast, Ghana.",
+  title: "Selected Project Experience",
+  description: "Publicly documented project references and company-stated portfolio experience from Green-Building Creations Ltd. in Ghana.",
 };
 export const revalidate = 60;
 
@@ -22,13 +22,13 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
 
   return (
     <>
-      <PageHero eyebrow="Our work" title="Featured Projects">
-        Residential, commercial and institutional buildings by Green-Building Creations.
+      <PageHero eyebrow="Our work" title="Selected Project Experience">
+        Public project references and building types GBC identifies in its company profile. Each entry distinguishes a documented built-work contribution, a published project brief and broader company-stated experience. Exact client and site details are shown only where publicly available.
       </PageHero>
       <section className="bg-white py-16 lg:py-24" aria-labelledby="all-projects">
         <div className="container-gbc">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <Heading id="all-projects" eyebrow="Featured projects" title={category ?? "All Projects"} />
+            <Heading id="all-projects" eyebrow="Portfolio references" title={category ?? "All Projects"} />
             <nav aria-label="Project categories" className="flex flex-wrap gap-x-8 gap-y-2">
               <Link href="/projects" className={tab(!category)} aria-current={!category ? "page" : undefined}>All</Link>
               {categories.map((c) => (
@@ -47,6 +47,9 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
               ))}
             </div>
           )}
+          <p className="mt-8 max-w-3xl border-l-2 border-sage pl-4 text-xs leading-relaxed text-muted">
+            Portfolio note: some entries describe experience stated in GBC's public company profile rather than separately named case studies. Published project briefs are not presented as completed buildings. Illustrative images are labelled and should not be mistaken for project photographs.
+          </p>
         </div>
       </section>
       <GetInTouch />
