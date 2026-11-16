@@ -142,6 +142,7 @@ export default function ProjectMap({
                 {p.location}
                 {p.approximate && <span> · approximate position</span>}
               </p>
+              {p.imageNote && <p className="mt-2 text-[10px] uppercase tracking-wide text-muted">{p.imageNote}</p>}
               <Link href={`/projects/${p.slug}`} className="gbc-popup__link">
                 View project
               </Link>
