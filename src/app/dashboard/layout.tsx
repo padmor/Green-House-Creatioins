@@ -13,7 +13,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
     { href: "/dashboard", label: "Overview", show: true },
     { href: "/dashboard/enquiries", label: "Job requests", show: can.workEnquiries(staff.role) },
     { href: "/dashboard/tradespeople", label: "Tradespeople", show: can.verifyTradespeople(staff.role) },
-    { href: "/dashboard/projects", label: "Portfolio archive", show: can.managePortfolio(staff.role) },
     { href: "/dashboard/content", label: "Website content", show: can.editContent(staff.role) },
     { href: "/dashboard/announcements", label: "Announcements", show: can.editContent(staff.role) },
     { href: "/dashboard/people", label: "Founder & team", show: can.editContent(staff.role) },
