@@ -158,7 +158,7 @@ export const fallbackProjects: Project[] = [
     "Cape Coast, Ghana",
     "/images/gbc/residential.jpg",
     "A three-bedroom plan is recorded as built in Cape Coast. A former GBC intern's public work history describes a structural drawing contribution and construction-site supervision during their placement.",
-    "A former GBC intern's public professional profile records that a three-bedroom residential plan was built in Cape Coast. The same work-history entry says the intern proposed a structural drawing and supported construction supervision, measurement checks and site safety during a June–July 2024 placement at Green Building Creations.\n\nThis listing is limited to the contribution described in that public profile. The client, exact site, project date and full contractual scope have not been publicly identified.",
+    "A former GBC intern's public professional profile records that a three-bedroom residential plan was built in Cape Coast. The same work-history entry says the intern proposed a structural drawing and supported construction supervision, measurement checks and site safety during a June–July 2024 internship at Green Building Creations.\n\nThis listing is limited to the contribution described in that public profile. The client, exact site, project date and full contractual scope have not been publicly identified.",
     "Built · contribution documented",
     "Structural drawing contribution; construction supervision; measurement and safety checks, as publicly described.",
     "https://himalayas.app/@felixamnkwahkwasi",
