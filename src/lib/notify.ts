@@ -90,16 +90,20 @@ export async function sendTradespersonApplicationNotification(applicant: Tradesp
 
   const resend = new Resend(key);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
-  const result = await resend.emails.send({
-    from,
-    to: recipients,
-    replyTo: applicant.email,
-    subject: `New ${applicant.trade} application: ${applicant.public_name}`,
-    html: `<p>A new tradesperson application has been received.</p>
+  try {
+    const result = await resend.emails.send({
+      from,
+      to: recipients,
+      replyTo: applicant.email,
+      subject: `New ${applicant.trade} application: ${applicant.public_name}`,
+      html: `<p>A new tradesperson application has been received.</p>
 <p><strong>${esc(applicant.public_name)}</strong> (${esc(applicant.full_name)}) applied as a ${esc(applicant.trade)} in ${esc(applicant.service_area)}.</p>
 <p>${esc(applicant.email)} · ${esc(applicant.phone)}</p>
 <p>The application is private and pending review. It is not yet listed in the public directory.</p>
 <p><a href="${siteUrl}/dashboard/tradespeople">Open the tradesperson review queue</a></p>`,
-  });
-  if (result.error) console.error("[notify] tradesperson application email failed", result.error);
+    });
+    if (result.error) console.error("[notify] tradesperson application email failed", result.error);
+  } catch (error) {
+    console.error("[notify] tradesperson application email failed", error);
+  }
 }
