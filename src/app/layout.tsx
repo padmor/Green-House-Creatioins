@@ -13,9 +13,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: `${company.name} | Planning, Design & Construction, Cape Coast`, template: `%s | ${company.short}` },
+  title: { default: `${company.name} | Trades & Job Matching, Cape Coast`, template: `%s | ${company.short}` },
   description:
-    "Green-Building Creations Ltd. is a nature-inclusive design and build firm in Cape Coast, Ghana: planning, architectural design and building construction, delivered with quality, on time and within safe working environments.",
+    "Green-Building Creations Ltd. connects customers with skilled tilers, electricians, plumbers, carpenters and masons in Ghana. Post a job request, find reviewed trade professionals and coordinate the next steps.",
   openGraph: { type: "website", siteName: company.name, locale: "en_GH" },
 };
 
