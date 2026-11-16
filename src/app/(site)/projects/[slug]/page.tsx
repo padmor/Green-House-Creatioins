@@ -50,7 +50,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <>
       <ScrollProgress />
-      <PageHero eyebrow={p.category} title={p.title} image={images[0]} imageAlt={`${p.title}, ${p.location}`} />
+      <PageHero eyebrow={p.category} title={p.title} />
 
       <section aria-label="Project facts" className="border-b border-stone bg-white">
         <dl className="container-gbc grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(160px,1fr))]">
