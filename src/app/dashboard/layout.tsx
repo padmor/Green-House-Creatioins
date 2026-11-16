@@ -4,15 +4,16 @@ import { can, requireStaff } from "@/lib/auth";
 import { logout } from "@/app/actions/auth";
 import { PendingButton } from "@/components/PendingButton";
 
-export const metadata: Metadata = { title: { default: "Dashboard", template: "%s | GBC Dashboard" }, robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: { default: "Dashboard", template: "%s | GBC Job Desk" }, robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const staff = await requireStaff();
   const links = [
     { href: "/dashboard", label: "Overview", show: true },
-    { href: "/dashboard/enquiries", label: "Enquiries", show: can.workEnquiries(staff.role) },
-    { href: "/dashboard/projects", label: "Portfolio", show: can.managePortfolio(staff.role) },
+    { href: "/dashboard/enquiries", label: "Job requests", show: can.workEnquiries(staff.role) },
+    { href: "/dashboard/tradespeople", label: "Tradespeople", show: can.verifyTradespeople(staff.role) },
+    { href: "/dashboard/projects", label: "Portfolio archive", show: can.managePortfolio(staff.role) },
     { href: "/dashboard/content", label: "Website content", show: can.editContent(staff.role) },
     { href: "/dashboard/announcements", label: "Announcements", show: can.editContent(staff.role) },
     { href: "/dashboard/people", label: "Founder & team", show: can.editContent(staff.role) },
@@ -23,7 +24,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     <div className="min-h-dvh bg-bone">
       <header className="border-b border-stone bg-forest-900 text-bone">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-5 py-3 sm:px-8">
-          <Link href="/dashboard" className="font-serif text-lg">GBC Dashboard</Link>
+          <Link href="/dashboard" className="font-serif text-lg">GBC Job Desk</Link>
           <div className="flex items-center gap-4 text-sm">
             <span className="hidden text-bone/70 sm:inline">{staff.full_name || staff.email} · {staff.role}</span>
             <Link href="/" className="text-bone/70 hover:text-bone">View site</Link>
