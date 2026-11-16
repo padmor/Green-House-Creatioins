@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { statusLabels, statusOrder } from "@/lib/content";
 import { EnquiryTable, type EnquiryRow } from "../EnquiryTable";
 
-export const metadata: Metadata = { title: "Enquiries" };
+export const metadata: Metadata = { title: "Job Requests" };
 
 export default async function EnquiriesPage({ searchParams }: { searchParams: Promise<{ status?: string; mine?: string }> }) {
   const staff = await requireStaff((r) => can.workEnquiries(r));
@@ -26,7 +26,7 @@ export default async function EnquiriesPage({ searchParams }: { searchParams: Pr
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl text-forest-900">Enquiries</h1>
+      <h1 className="text-3xl text-forest-900">Job Requests</h1>
       <nav aria-label="Filter" className="flex flex-wrap gap-2">
         <Link href="/dashboard/enquiries" className={tab(!status && !mine)}>All</Link>
         {can.viewAllEnquiries(staff.role) && <Link href="/dashboard/enquiries?mine=1" className={tab(Boolean(mine))}>Assigned to me</Link>}
@@ -34,7 +34,7 @@ export default async function EnquiriesPage({ searchParams }: { searchParams: Pr
           <Link key={s} href={`/dashboard/enquiries?status=${s}`} className={tab(status === s)}>{statusLabels[s]}</Link>
         ))}
       </nav>
-      <EnquiryTable rows={(data ?? []) as unknown as EnquiryRow[]} empty="No enquiries match this filter." />
+      <EnquiryTable rows={(data ?? []) as unknown as EnquiryRow[]} empty="No job requests match this filter." />
     </div>
   );
 }
