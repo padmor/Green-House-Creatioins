@@ -49,7 +49,9 @@ export default function TrustPage() {
               Ghana's Energy Commission states that indoor electrical wiring work must be carried out by appropriately certified Electrical Wiring Professionals. GBC therefore requires a verified CEWP credential before an electrician profile can be approved for wiring work.
             </p>
             <div className="mt-6 space-y-2 text-sm">
-              <p><a className="font-semibold text-forest-900 underline underline-offset-4" href="https://energycom.gov.gh/index.php/initiatives/electrical-wiring" target="_blank" rel="noopener noreferrer">Energy Commission — Electrical Wiring</a></p>
+              <p><a className="font-semibold text-forest-900 underline underline-offset-4" href="https://energycom.gov.gh/index.php/initiatives/electrical-wiring" target="_blank" rel="noopener noreferrer">Energy Commission — Electrical Wiring certification</a></p>
+              <p><a className="font-semibold text-forest-900 underline underline-offset-4" href="https://www.energycom.gov.gh/index.php/documents/category/22-cewp-register?download=74%3Acentral-region" target="_blank" rel="noopener noreferrer">Central Region CEWP register ↗</a></p>
+              <p className="text-xs leading-relaxed text-muted">The published register is a reference for review, not proof that a listed professional is currently available or that their certificate remains active. Confirm current status with the Energy Commission before approval.</p>
               <p><a className="font-semibold text-forest-900 underline underline-offset-4" href="https://www.ctvet.gov.gh/" target="_blank" rel="noopener noreferrer">CTVET — Certificate verification and TVET services</a></p>
             </div>
           </div>
