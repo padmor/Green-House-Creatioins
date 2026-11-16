@@ -9,12 +9,12 @@ const labels: Record<string, string> = {
   "home.hero.eyebrow": "Home: small line above the headline",
   "home.hero.title": "Home: headline",
   "home.hero.subtitle": "Home: sub-headline",
-  "home.about.title": "Home: About GBC heading",
-  "home.intro": "Home: About GBC paragraph",
-  "home.locations": "Home and map: project locations text",
-  "home.careers": "Home and careers: careers text",
-  "about.story": "About: our story",
-  "sustainability.intro": "Sustainability: introduction",
+  "home.about.title": "Home: jobsite positioning heading",
+  "home.intro": "Home: job matching introduction",
+  "home.locations": "Home: service area and job location text",
+  "home.careers": "Home: tradesperson recruitment text",
+  "about.story": "How it works: customer and tradesperson flow",
+  "sustainability.intro": "Worksite standards: introduction",
 };
 
 export function ContentForm({ values }: { values: Record<string, string> }) {
