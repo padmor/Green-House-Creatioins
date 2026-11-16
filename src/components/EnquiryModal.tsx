@@ -11,7 +11,7 @@ import { company } from "@/lib/content";
 // (except on /contact itself, which has the full form). Without JavaScript the links still go to
 // the contact page. Uses a native <dialog> for focus trapping and Escape-to-close.
 // What happens after someone enquires (mirrors the dashboard pipeline: new → contacted → consultation → proposal).
-const steps = ["We read your message and get back to you", "We arrange a consultation to understand your project", "You receive a clear proposal for the work"];
+const steps = ["We review your job request", "We confirm the trade, location and timing", "We check availability and discuss the next step"];
 
 export function EnquiryModal() {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -72,8 +72,8 @@ export function EnquiryModal() {
             <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-forest-950/80 via-forest-950/85 to-forest-950/95" />
             <div>
               <LogoMark light size={40} />
-              <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.26em] text-sage">Start your project</p>
-              <p className="mt-3 font-serif text-2xl font-semibold leading-tight tracking-[-0.015em] sm:text-[1.75rem]">Let&apos;s Build Something Great</p>
+              <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.26em] text-sage">Post a job</p>
+              <p className="mt-3 font-serif text-2xl font-semibold leading-tight tracking-[-0.015em] sm:text-[1.75rem]">Let&apos;s get your job moving</p>
             </div>
             <ol className="hidden space-y-5 md:block">
               {steps.map((t, i) => (
@@ -96,9 +96,9 @@ export function EnquiryModal() {
           {/* Form panel */}
           <div className="relative bg-white p-7 sm:p-10">
             <h2 id="enquiry-modal-title" className="text-2xl md:pr-12 font-semibold tracking-[-0.015em] text-forest-900 sm:text-3xl">
-              Send us a message
+              Tell us what needs doing
             </h2>
-            <p className="mb-8 mt-2 text-sm text-ink/70">Tell us a little about your project and a member of the team will be in touch.</p>
+            <p className="mb-8 mt-2 text-sm text-ink/70">Choose the trade you need and describe the job. The GBC team will review your request.</p>
             <EnquiryForm key={round} variant="compact" />
             <p className="mt-7 border-t border-stone pt-5 text-xs text-muted md:hidden">
               Prefer to talk? Call{" "}
