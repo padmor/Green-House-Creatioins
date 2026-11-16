@@ -53,7 +53,7 @@ export async function submitEnquiry(_prev: EnquiryState, formData: FormData): Pr
   const h = await headers();
   const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   if (throttled(ip)) {
-    return { ok: false, values: raw, message: "Too many enquiries from this connection. Please try again later." };
+    return { ok: false, values: raw, message: "Too many job requests from this connection. Please try again later." };
   }
 
   const db = createAdminClient();
