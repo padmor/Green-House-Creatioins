@@ -14,7 +14,7 @@ export default async function ServicesPage() {
   const professionals = await getVerifiedTradespeople();
   return (
     <>
-      <PageHero eyebrow="What you can book" title="Trades & Services">
+      <PageHero eyebrow="What you can request" title="Trades & Services">
         Tell us what needs doing and where. We coordinate job requests across five core trade categories, then confirm availability and next steps with you.
       </PageHero>
       <section className="bg-bone py-16 lg:py-24">
