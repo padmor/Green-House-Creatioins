@@ -79,7 +79,7 @@ const sections: { title: string; body: React.ReactNode }[] = [
         <p>Private job requests and tradesperson applications are available to authorised GBC staff who handle requests and verification. We use service providers to operate the website:</p>
         <ul className="list-disc space-y-1 pl-5">
           <li>Supabase, which stores job requests and private tradesperson applications;</li>
-          <li>Resend, which sends job-request acknowledgements and notifications to GBC;</li>
+          <li>Resend, which sends job-request acknowledgements and notifications to GBC, including new tradesperson application alerts;</li>
           <li>Vercel, which hosts the website.</li>
         </ul>
         <p>
