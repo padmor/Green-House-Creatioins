@@ -37,10 +37,11 @@ export default async function ProjectPage({ params }: Props) {
 
   const canRate = ratingsEnabled();
   const images = p.image_urls.length ? p.image_urls : [coverFor(p, index)];
-  const text = (p.body || p.summary).split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
+  const paragraphs = (p.body || p.summary).split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
   const facts = [
     ["Category", p.category],
     ["Location", p.location],
+    ["Portfolio status", p.portfolioStatus],
     ["Year", p.year ? String(p.year) : null],
     ["Scope", p.scope],
     ["Client", p.client],
@@ -51,7 +52,6 @@ export default async function ProjectPage({ params }: Props) {
       <ScrollProgress />
       <PageHero eyebrow={p.category} title={p.title} image={images[0]} imageAlt={`${p.title}, ${p.location}`} />
 
-      {/* Key facts strip */}
       <section aria-label="Project facts" className="border-b border-stone bg-white">
         <dl className="container-gbc grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(160px,1fr))]">
           {facts.map(([k, v]) => (
@@ -76,10 +76,18 @@ export default async function ProjectPage({ params }: Props) {
           <div className="max-w-md">
             <Heading eyebrow="Project overview" title="About the Project" />
             <div className="text-body mt-6 space-y-4">
-              {text.map((para, i) => (
+              {paragraphs.map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>
+            {p.sourceUrl && (
+              <p className="mt-6 text-xs leading-relaxed text-muted">
+                Public reference:{" "}
+                <a href={p.sourceUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-forest-900 underline underline-offset-4 hover:text-forest-600">
+                  View supporting source ↗
+                </a>
+              </p>
+            )}
             {canRate && (
               <div className="mt-8">
                 <RateProject slug={p.slug} title={p.title} initial={p.rating} />
@@ -89,18 +97,22 @@ export default async function ProjectPage({ params }: Props) {
               <Link href="/projects" className="group inline-flex items-center gap-2 border-b border-forest-900 pb-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-forest-900">
                 <span aria-hidden className="transition-transform group-hover:-translate-x-1">←</span> All projects
               </Link>
-              <Link href="/map" className="group inline-flex items-center gap-2 border-b border-forest-900 pb-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-forest-900">
-                See on project map
-              </Link>
+              {/cape coast|university of cape coast/i.test(p.location) && (
+                <Link href="/map" className="group inline-flex items-center gap-2 border-b border-forest-900 pb-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-forest-900">
+                  See on project map
+                </Link>
+              )}
             </div>
           </div>
           <div>
             <ProjectGallery images={images} title={p.title} />
+            {p.imageNote && (
+              <p className="mt-3 text-[10px] font-medium uppercase tracking-[0.1em] text-muted">{p.imageNote}</p>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Previous / next project */}
       {prev && next && (
         <nav aria-label="More projects" className="border-t border-stone bg-white">
           <div className="container-gbc grid sm:grid-cols-2">
