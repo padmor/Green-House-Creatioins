@@ -5,7 +5,7 @@
 export const company = {
   name: "Green-Building Creations Ltd.",
   short: "GBC",
-  tagline: "We Plan. We Design. We Build.",
+  tagline: "Find skilled hands. Get the job done.",
   city: "Cape Coast",
   country: "Ghana",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "info@gbcghana.com",
@@ -15,14 +15,14 @@ export const company = {
   region: "Central Region",
   address: "Cape Coast, Central Region, Ghana",
   postal: "P. O. Box UC 23, Cape Coast, Ghana",
-  industry: "Construction",
-  positioning: "Nature Inclusive Design & Build Firm",
+  industry: "Trade Services & Job Matching",
+  positioning: "A job-matching service for skilled tradespeople",
   sustainability:
-    "Our work, and how we work, contribute to a sustainable future for our people, our clients and society.",
+    "We support safer worksites, clear job scopes and responsible work practices by connecting clients with skilled trade professionals.",
   // Map centre / office pin (Cape Coast).
   coords: [5.1053, -1.2466] as [number, number],
   mission:
-    "To deliver quality buildings on time, in safe working environments, with responsibility for the environment we build in.",
+    "To make it easier for customers to find skilled tradespeople and for qualified professionals to access genuine work opportunities.",
 };
 
 // Social links appear in the footer only when configured.
@@ -33,51 +33,80 @@ export const social = [
 ].filter((s): s is { label: string; href: string; icon: string } => Boolean(s.href));
 
 export const nav = [
-  { href: "/about", label: "About Us" },
-  { href: "/projects", label: "Featured Projects" },
-  { href: "/map", label: "Interactive Project Map" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "How it works" },
+  { href: "/projects", label: "Find a trade" },
+  { href: "/map", label: "Trust & verification" },
+  { href: "/contact", label: "Post a job" },
 ] as const;
 
 export const footerNav = [
   ...nav,
-  { href: "/services", label: "Services" },
-  { href: "/sustainability", label: "Sustainability" },
-  { href: "/careers", label: "Careers" },
+  { href: "/careers", label: "Join as a tradesperson" },
+  { href: "/sustainability", label: "Worksite standards" },
 ] as const;
 
 export const services = [
   {
-    slug: "plan",
-    verb: "Plan",
-    title: "Planning",
-    summary:
-      "Site appraisal, feasibility, budgeting and programme planning so a project starts with clear scope and realistic expectations.",
-    points: ["Site and feasibility assessment", "Budget and programme planning", "Permit and approvals guidance"],
+    slug: "tiler",
+    verb: "Tile",
+    title: "Tilers",
+    summary: "Find skilled tilers for floor and wall tiling, bathrooms, kitchens, repairs and finishing work.",
+    points: ["Floor and wall installation", "Bathroom and kitchen tiling", "Regrouting and tile repairs"],
   },
   {
-    slug: "design",
-    verb: "Design",
-    title: "Architectural Design",
-    summary:
-      "Concept to construction drawings, shaped around how the building will be used, the local climate and the budget.",
-    points: ["Concept and detailed design", "Construction documentation", "Climate-responsive thinking"],
+    slug: "electrician",
+    verb: "Wire",
+    title: "Electricians",
+    summary: "Connect with electricians for installation, repairs, lighting and electrical maintenance. Indoor wiring requests are referred only to professionals whose CEWP status is verified.",
+    points: ["Lighting and fixture installation", "Fault finding and repairs", "Certified indoor wiring work"],
   },
   {
-    slug: "build",
+    slug: "plumber",
+    verb: "Fix",
+    title: "Plumbers",
+    summary: "Get help with pipework, taps, drainage, bathrooms, water systems and plumbing repairs.",
+    points: ["Pipe and fitting installation", "Leaks and drainage repairs", "Bathroom and water-system work"],
+  },
+  {
+    slug: "carpenter",
+    verb: "Craft",
+    title: "Carpenters",
+    summary: "Find carpenters for doors, roofing timber, cabinetry, furniture, fittings and woodwork repairs.",
+    points: ["Doors, frames and fittings", "Cabinetry and furniture", "Roof and general woodwork"],
+  },
+  {
+    slug: "mason",
     verb: "Build",
-    title: "Building Construction",
-    summary:
-      "Disciplined site management, safe working practice and attention to finish, from foundations to handover.",
-    points: ["Modern apartments, department stores and offices", "Site safety and supervision", "Quality control through to handover"],
+    title: "Masons",
+    summary: "Connect with masons for block laying, plastering, screeding, concrete work and masonry repairs.",
+    points: ["Block laying and plastering", "Concrete and screeding", "Masonry repairs and alterations"],
   },
 ] as const;
 
+export const tradeCategories = [
+  { slug: "tiler", name: "Tilers", singular: "Tiler", summary: "Floor and wall tiling, bathrooms, kitchens, regrouting and tile repairs.", image: "/images/gbc/residential.jpg" },
+  { slug: "electrician", name: "Electricians", singular: "Electrician", summary: "Lighting, installations, fault finding and electrical maintenance.", image: "/images/gbc/commercial.jpg" },
+  { slug: "plumber", name: "Plumbers", singular: "Plumber", summary: "Pipework, taps, drainage, water systems and plumbing repairs.", image: "/images/gbc/institutional.jpg" },
+  { slug: "carpenter", name: "Carpenters", singular: "Carpenter", summary: "Doors, cabinets, furniture, roofing timber and woodwork repairs.", image: "/images/gbc/residential.jpg" },
+  { slug: "mason", name: "Masons", singular: "Mason", summary: "Block laying, plastering, screeding, concrete and masonry repairs.", image: "/images/gbc/institutional.jpg" },
+] as const;
+
+export type TradeName = (typeof tradeCategories)[number]["singular"];
+export type VerifiedTradesperson = {
+  id: string;
+  public_name: string;
+  trade: TradeName;
+  service_area: string;
+  experience_years: number;
+  bio: string;
+  portfolio_url: string | null;
+};
+
 export const values = [
-  { title: "Quality", text: "Work we are prepared to put our name to, checked at every stage." },
-  { title: "Timely delivery", text: "Realistic programmes, honest updates and a team that plans ahead." },
-  { title: "Safe working environments", text: "Safety is part of how every site is set up and run." },
-  { title: "Environmental responsibility", text: "Thoughtful materials, waste and site practice that respect the place we build." },
+  { title: "Verified skills", text: "Trade credentials, identity, references and work evidence are reviewed before a professional is listed as verified." },
+  { title: "Clear job details", text: "Customers describe the work, location, timing and budget so professionals can respond with relevant quotes." },
+  { title: "Safer work", text: "Safety and trade-specific requirements matter. Electrical wiring work is matched only with appropriately certified professionals." },
+  { title: "Accountability", text: "Job requests, follow-ups and agreed next steps are recorded so customers know what happens next." },
 ] as const;
 
 // Seniority groups for staff profiles on the About page, in display order.
@@ -215,21 +244,21 @@ export const fallbackProjects: Project[] = [
 
 // Keys editable from the dashboard (table: site_content). Values here are the defaults.
 export const editableContent = {
-  "home.hero.eyebrow": "Sustainable spaces. Lasting impact.",
-  "home.hero.title": "We Plan. We Design. We Build.",
+  "home.hero.eyebrow": "Your job. The right professional.",
+  "home.hero.title": "Find the right hands for the job.",
   "home.hero.subtitle":
-    "Planning, architectural design and building construction from Cape Coast, Ghana, delivered with care for quality, safety and the environment.",
-  "home.about.title": "Building a greener, smarter tomorrow.",
+    "Find tilers, electricians, plumbers, carpenters and masons. Post a job, get connected with a suitable professional and keep track of the work.",
+  "home.about.title": "Skilled trades. Clear requests. Better job connections.",
   "home.intro":
-    "Green-Building Creations Ltd. is a nature-inclusive design and build firm in Cape Coast, Ghana, committed to sustainable, innovative and high-quality building solutions. We create spaces that respect the environment, enhance communities and stand the test of time.",
+    "Green-Building Creations Ltd. is developing a job-matching service that helps customers find skilled tradespeople and helps professionals access genuine work. Profiles are published as verified only after the required checks have been completed.",
   "home.locations":
-    "Two specific public project references in this portfolio are associated with Cape Coast. We show city-level map pins only where a source gives a location, and leave projects without a published site address off the map.",
+    "GBC is based in Cape Coast. Job requests can be submitted with the work location, and availability is confirmed with the customer before a professional is matched.",
   "home.careers":
-    "We're always looking for passionate people who want to make a difference in sustainable construction and design.",
+    "Are you a tiler, electrician, plumber, carpenter or mason? Apply to join the network. Your profile will be reviewed before it can appear as verified.",
   "about.story":
-    "Green-Building Creations Ltd. (GBC) is based in Cape Coast, in Ghana's Central Region. We bring planning, architectural design and building construction under one roof, from modern apartments to department stores and offices, so clients deal with one accountable team from the first sketch to handover. We work to deliver quality on time, within safe working environments.",
+    "Green-Building Creations Ltd. (GBC) is based in Cape Coast, Ghana. We are shifting the website from a building portfolio into a job-matching service for customers who need skilled trade work and professionals looking for genuine jobs. Customers can post a job request, share the location and requirements, and receive follow-up from the GBC team. Tradespeople apply to join the network and are reviewed before a verified profile is published.",
   "sustainability.intro":
-    "Our work, and how we work, contribute to a sustainable future for our people, our clients and society. Building responsibly means considering the site, the materials and the people who will use the building long after we leave.",
+    "A dependable job site begins with clear scopes, safe work practices and transparent expectations. We review trade evidence before listing a professional as verified and keep electrical wiring requests subject to the relevant certification checks.",
 } as const;
 
 export type ContentKey = keyof typeof editableContent;
@@ -252,18 +281,18 @@ export type AnnouncementItem = {
 export type Announcement = Omit<AnnouncementItem, "enabled" | "ends_on">;
 
 export const enquiryOptions = {
-  services: ["Planning", "Architectural design", "Building construction", "Design and build", "Not sure yet"],
-  projectTypes: ["House / residential", "Apartments", "Commercial / office", "School / institutional", "Retail / department store", "Renovation / extension", "Other"],
-  budgets: ["Under GH₵ 250,000", "GH₵ 250,000 – 1,000,000", "GH₵ 1,000,000 – 5,000,000", "Above GH₵ 5,000,000", "Not decided"],
-  timelines: ["As soon as possible", "Within 3 months", "3 – 6 months", "6 – 12 months", "Just exploring"],
+  services: ["Tiler", "Electrician", "Plumber", "Carpenter", "Mason", "Other trade"],
+  projectTypes: ["Installation", "Repair", "Renovation", "Maintenance", "Emergency work", "Other"],
+  budgets: ["Need an estimate", "Labour only", "Labour and materials", "I have a fixed budget", "Discuss with me"],
+  timelines: ["Urgent — as soon as possible", "Within 2–3 days", "This week", "Within 2 weeks", "Flexible"],
 } as const;
 
 export const statusLabels: Record<string, string> = {
-  new: "New enquiry",
-  contacted: "Contacted",
-  consultation: "Consultation",
-  proposal: "Proposal",
-  won: "Won",
-  lost: "Lost",
+  new: "New job request",
+  contacted: "Customer contacted",
+  consultation: "Requirements being checked",
+  proposal: "Quote shared",
+  won: "Professional hired",
+  lost: "Closed / not proceeding",
 };
 export const statusOrder = ["new", "contacted", "consultation", "proposal", "won", "lost"] as const;
