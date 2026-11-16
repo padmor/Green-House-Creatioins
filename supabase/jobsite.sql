@@ -23,6 +23,8 @@ create table if not exists public.tradespeople (
   references_checked boolean not null default false,
   practical_assessment boolean not null default false,
   cewp_verified boolean not null default false,
+  verified_by uuid references public.profiles(id) on delete set null,
+  verified_at timestamptz,
   application_status text not null default 'pending'
     check (application_status in ('pending', 'verified', 'rejected')),
   published boolean not null default false,
@@ -36,6 +38,8 @@ create table if not exists public.tradespeople (
       and qualification_checked
       and references_checked
       and practical_assessment
+      and verified_by is not null
+      and verified_at is not null
       and (trade <> 'Electrician' or (cewp_verified and char_length(trim(cewp_reference)) > 0))
     )
   ),
