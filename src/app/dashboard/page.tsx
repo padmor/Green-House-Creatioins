@@ -30,7 +30,7 @@ export default async function DashboardHome({ searchParams }: { searchParams: Pr
       <div>
         <h1 className="text-3xl text-forest-900">Welcome{staff.full_name ? `, ${staff.full_name.split(" ")[0]}` : ""}</h1>
         {denied && <p role="alert" className="mt-3 border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-800">Your role does not have access to that area.</p>}
-        {staff.role === "staff" && <p className="mt-2 text-sm text-muted">You can see enquiries assigned to you.</p>}
+        {staff.role === "staff" && <p className="mt-2 text-sm text-muted">You can see job requests assigned to you.</p>}
       </div>
 
       {showEnquiries ? (
@@ -51,14 +51,14 @@ export default async function DashboardHome({ searchParams }: { searchParams: Pr
 
           <section>
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-xl text-forest-900">New enquiries</h2>
-              <Link href="/dashboard/enquiries" className="text-sm underline underline-offset-4">All enquiries</Link>
+              <h2 className="text-xl text-forest-900">New job requests</h2>
+              <Link href="/dashboard/enquiries" className="text-sm underline underline-offset-4">All job requests</Link>
             </div>
-            <EnquiryTable rows={(fresh?.data ?? []) as unknown as EnquiryRow[]} empty="No new enquiries." />
+            <EnquiryTable rows={(fresh?.data ?? []) as unknown as EnquiryRow[]} empty="No new job requests." />
           </section>
         </>
       ) : (
-        <p className="text-muted">Use the menu above to manage the portfolio and website content.</p>
+        <p className="text-muted">Use the menu above to manage trade applications and website content.</p>
       )}
     </div>
   );
