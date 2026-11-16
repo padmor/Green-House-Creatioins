@@ -30,6 +30,8 @@ type Applicant = {
   application_status: string;
   published: boolean;
   verification_notes: string;
+  verified_by: string | null;
+  verified_at: string | null;
   created_at: string;
 };
 
@@ -99,6 +101,7 @@ export default async function TradespeopleReviewPage({
                   {person.portfolio_url && <p><a href={person.portfolio_url} target="_blank" rel="noopener noreferrer" className="font-semibold text-forest-900 underline underline-offset-4">Open work samples ↗</a></p>}
                   {person.bio && <p className="border-t border-stone pt-3 leading-relaxed text-ink/75">{person.bio}</p>}
                   <p className="text-xs text-muted">Applied {new Date(person.created_at).toLocaleString("en-GB")}</p>
+                  {person.verified_at && <p className="text-xs text-forest-700">Approved {new Date(person.verified_at).toLocaleString("en-GB")}</p>}
                 </div>
 
                 <form action={reviewTradesperson} className="space-y-4 rounded-xl bg-bone p-4">
