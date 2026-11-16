@@ -81,7 +81,7 @@ export function Header({ solid = false, announcements = [] }: { solid?: boolean;
               overlay ? "bg-bone text-ink hover:bg-white" : "bg-ink text-bone hover:bg-ink-soft"
             }`}
           >
-            Enquire now
+            Post a job
           </Link>
           <button
             type="button"
